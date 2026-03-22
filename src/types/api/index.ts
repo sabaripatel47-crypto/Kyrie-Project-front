@@ -27,3 +27,7 @@ export * from "./monitor/online";
 
 // 代码生成模块
 export * from "./tool/gen";
+
+// CS2 商城
+export * from "./cs2/product";
+export * from "./cs2/shop";

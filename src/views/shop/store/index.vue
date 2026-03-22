@@ -1,32 +1,148 @@
 <template>
-  <div class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <div class="max-w-sm bg-white rounded-2xl shadow-lg p-6 text-center">
-      
-      <h1 class="text-xl font-bold text-gray-800 mb-4">
-        Vue + Tailwind 示例
-      </h1>
+  <div class="app-container">
+    <el-form ref="queryRef" :model="queryParams" :inline="true" v-show="showSearch">
+      <el-form-item label="店铺名称" prop="name">
+        <el-input
+          v-model="queryParams.name"
+          placeholder="模糊搜索"
+          clearable
+          style="width: 220px"
+          @keyup.enter="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
 
-      <p class="text-gray-600 mb-4">
-        你点击了 {{ count }} 次
-      </p>
+    <el-row :gutter="10" class="mb8">
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList" />
+    </el-row>
 
-      <button
-        @click="increment"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
-      >
-        点击 +1
-      </button>
+    <el-table v-loading="loading" :data="shopList">
+      <el-table-column label="ID" align="center" prop="id" width="80" />
+      <el-table-column label="Logo" align="center" width="100">
+        <template #default="scope">
+          <el-image
+            v-if="resolveLogoUrl(scope.row.logo)"
+            :src="resolveLogoUrl(scope.row.logo)"
+            :preview-src-list="[resolveLogoUrl(scope.row.logo)]"
+            fit="cover"
+            style="width: 48px; height: 48px; border-radius: 6px"
+            preview-teleported
+          />
+          <span v-else class="text-muted">—</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="店铺名称" align="center" prop="name" min-width="180" :show-overflow-tooltip="true" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="120">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="120" class-name="small-padding fixed-width">
+        <template #default="scope">
+          <el-button
+            link
+            type="primary"
+            icon="View"
+            @click="handleDetail(scope.row)"
+            v-hasPermi="['cs2:shop:query']"
+          >详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
-    </div>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <el-dialog title="店铺详情" v-model="detailOpen" width="520px" append-to-body>
+      <el-descriptions v-if="detail" :column="1" border>
+        <el-descriptions-item label="ID">{{ detail.id }}</el-descriptions-item>
+        <el-descriptions-item label="名称">{{ detail.name }}</el-descriptions-item>
+        <el-descriptions-item label="Logo">
+          <el-image
+            v-if="resolveLogoUrl(detail.logo)"
+            :src="resolveLogoUrl(detail.logo)"
+            :preview-src-list="[resolveLogoUrl(detail.logo)]"
+            style="max-width: 200px; max-height: 200px"
+            fit="contain"
+            preview-teleported
+          />
+          <span v-else>—</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="创建时间">{{ parseTime(detail.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</el-descriptions-item>
+      </el-descriptions>
+      <template #footer>
+        <el-button @click="detailOpen = false">关 闭</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts" name="Cs2Store">
+import { getShop, listShop } from '@/api/cs2/shop'
+import type { Cs2Shop, Cs2ShopQueryParams } from '@/types/api/cs2/shop'
 
-const count = ref(0)
+const { proxy } = getCurrentInstance()!
 
-const increment = () => {
-  count.value++
+const baseApi = import.meta.env.VITE_APP_BASE_API
+
+function resolveLogoUrl(path?: string | null) {
+  if (!path) return ''
+  if (/^https?:\/\//i.test(path)) return path
+  return baseApi + path
 }
+
+const shopList = ref<Cs2Shop[]>([])
+const loading = ref(true)
+const showSearch = ref(true)
+const total = ref(0)
+const detailOpen = ref(false)
+const detail = ref<Cs2Shop | null>(null)
+
+const data = reactive({
+  queryParams: {
+    pageNum: 1,
+    pageSize: 10,
+    name: undefined
+  } as Cs2ShopQueryParams
+})
+
+const { queryParams } = toRefs(data)
+
+function getList() {
+  loading.value = true
+  listShop(queryParams.value).then(response => {
+    shopList.value = response.rows ?? []
+    total.value = response.total
+    loading.value = false
+  })
+}
+
+function handleQuery() {
+  queryParams.value.pageNum = 1
+  getList()
+}
+
+function resetQuery() {
+  proxy.resetForm('queryRef')
+  handleQuery()
+}
+
+function handleDetail(row: Cs2Shop) {
+  if (!row.id) return
+  getShop(row.id).then(res => {
+    detail.value = res.data ?? null
+    detailOpen.value = true
+  })
+}
+
+getList()
 </script>
