@@ -4,7 +4,11 @@
 @use './sidebar.scss';
 @use './btn.scss';
 @use './ruoyi.scss';
-
+// 仅引入 theme + utilities，不引入 preflight.css，避免重置标题/列表/边距等破坏现有页面。
+// 详见 https://tailwindcss.com/docs/preflight#disabling-preflight
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 body {
   height: 100%;
   margin: 0;
