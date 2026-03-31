@@ -419,7 +419,7 @@ function handleResetPwd(row: SysUser) {
       }
       return true
     },
-  }).then(({ value }: { value: string }) => { 
+  }).then(({ value }: { value: string }) => {
     resetUserPwd(row.userId!, value).then(() => {
       proxy.$modal.msgSuccess("修改成功，新密码是：" + value)
     })
