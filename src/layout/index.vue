@@ -98,12 +98,12 @@ function setLayout() {
   top: 0;
   right: 0;
   z-index: 9;
-  width: calc(100% - #{vars.$base-sidebar-width});
+  width: calc(100% - #{vars.$base-sidebar-width} - 2rem);
   transition: width 0.28s;
 }
 
 .hideSidebar .fixed-header {
-  width: calc(100% - 54px);
+  width: calc(100% - 54px - 2rem);
 }
 
 .sidebarHide .fixed-header {

@@ -5,7 +5,7 @@
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
-    margin-left: vars.$base-sidebar-width;
+    margin-left: calc(vars.$base-sidebar-width + 2rem);
     position: relative;
   }
 
@@ -16,18 +16,22 @@
   .sidebar-container {
     transition: width 0.28s;
     width: vars.$base-sidebar-width !important;
-    height: 100%;
+    height: calc(100vh - 2rem);
     position: fixed;
     font-size: 0px;
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top: 1rem;
+    bottom: 1rem;
+    left: 1rem;
     z-index: 1001;
     overflow: hidden;
-    -webkit-box-shadow: 2px 0 6px rgba(0,21,41,.35);
-    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 2rem;
+    box-shadow: 0 20px 40px rgba(145, 69, 57, 0.15);
 
-    // reset element-ui css
+    --el-menu-hover-bg-color: rgba(254, 156, 140, 0.2);
+    --el-menu-bg-color: transparent;
+    --el-menu-text-color: #914539;
+    --el-menu-active-color: #ffffff;
+
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
     }
@@ -46,7 +50,7 @@
 
     &.has-logo {
       .el-scrollbar {
-        height: calc(100% - 50px);
+        height: calc(100% - 80px);
       }
     }
 
@@ -80,33 +84,122 @@
       display: inline-block !important;
     }
 
-    // menu hover
-    .sub-menu-title-noDropdown,
-    .el-sub-menu__title {
+    .el-sub-menu {
+      > .el-sub-menu__title {
+        color: #914539 !important;
+        background-color: transparent !important;
+        border-radius: 0.75rem !important;
+        margin: 3px 12px !important;
+        width: calc(100% - 24px) !important;
+
+        * {
+          color: #914539 !important;
+        }
+
+        &:hover {
+          background-color: rgba(254, 156, 140, 0.2) !important;
+        }
+      }
+
+      &.is-opened > .el-sub-menu__title {
+        color: #914539 !important;
+      }
+
+      .el-menu {
+        background-color: transparent !important;
+      }
+    }
+
+    .sub-menu-title-noDropdown {
+      color: #914539 !important;
+      background-color: transparent !important;
+      border-radius: 0.75rem !important;
+      margin: 3px 12px !important;
+
       &:hover {
-        background-color: rgba(0, 0, 0, 0.06) !important;
+        background-color: rgba(254, 156, 140, 0.2) !important;
+      }
+    }
+
+    .el-menu-item {
+      color: #914539 !important;
+      border-radius: 0.75rem !important;
+      margin: 3px 12px !important;
+      width: calc(100% - 24px) !important;
+      height: 44px !important;
+      line-height: 44px !important;
+      background-color: transparent !important;
+      opacity: 0.75;
+
+      * { color: inherit !important; }
+
+      &:hover {
+        background-color: rgba(254, 156, 140, 0.2) !important;
+        color: #914539 !important;
+        opacity: 1;
+      }
+
+      &.is-active {
+        background-color: #fe9c8c !important;
+        color: #ffffff !important;
+        opacity: 1;
+        box-shadow: 0 8px 20px rgba(254, 156, 140, 0.4);
+        transition: transform 0.2s ease;
+
+        * { color: #ffffff !important; }
+
+        &:hover,
+        &:focus,
+        &:hover:focus {
+          background-color: #fe9c8c !important;
+          transform: rotate(1deg);
+        }
       }
     }
 
     & .theme-dark .is-active > .el-sub-menu__title {
-      color: vars.$base-menu-color-active !important;
+      color: #ffffff !important;
     }
 
     & .nest-menu .el-sub-menu>.el-sub-menu__title,
     & .el-sub-menu .el-menu-item {
       min-width: vars.$base-sidebar-width !important;
+      color: #914539 !important;
+      border-radius: 0.75rem !important;
+      margin: 3px 12px !important;
+      width: calc(100% - 24px) !important;
+      background-color: transparent !important;
+
+      * { color: inherit !important; }
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.06) !important;
+        background-color: rgba(254, 156, 140, 0.2) !important;
+        color: #914539 !important;
+      }
+
+      &.is-active {
+        background-color: #fe9c8c !important;
+        color: #ffffff !important;
+        box-shadow: 0 8px 20px rgba(254, 156, 140, 0.4);
+        transition: transform 0.2s ease;
+
+        * { color: #ffffff !important; }
+
+        &:hover,
+        &:focus,
+        &:hover:focus {
+          background-color: #fe9c8c !important;
+          transform: rotate(1deg);
+        }
       }
     }
 
     & .theme-dark .nest-menu .el-sub-menu>.el-sub-menu__title,
     & .theme-dark .el-sub-menu .el-menu-item {
-      background-color: vars.$base-sub-menu-background;
+      background-color: transparent;
 
       &:hover {
-        background-color: vars.$base-sub-menu-hover !important;
+        background-color: rgba(254, 156, 140, 0.2) !important;
       }
     }
   }
@@ -117,7 +210,7 @@
     }
 
     .main-container {
-      margin-left: 54px;
+      margin-left: calc(54px + 2rem);
     }
 
     .sub-menu-title-noDropdown {
@@ -142,7 +235,6 @@
         .svg-icon {
           margin-left: 20px;
         }
-
       }
     }
 
@@ -172,7 +264,6 @@
     min-width: vars.$base-sidebar-width !important;
   }
 
-  // mobile responsive
   .mobile {
     .main-container {
       margin-left: 0px;
@@ -193,7 +284,6 @@
   }
 
   .withoutAnimation {
-
     .main-container,
     .sidebar-container {
       transition: none;
@@ -201,7 +291,6 @@
   }
 }
 
-// when menu collapsed
 .el-menu--vertical {
   &>.el-menu {
     .svg-icon {
@@ -211,19 +300,25 @@
 
   .nest-menu .el-sub-menu>.el-sub-menu__title,
   .el-menu-item {
+    color: #914539 !important;
+
     &:hover {
-      // you can use $sub-menuHover
-      background-color: rgba(0, 0, 0, 0.06) !important;
+      background-color: rgba(254, 156, 140, 0.2) !important;
+      color: #914539 !important;
+    }
+
+    &.is-active {
+      background-color: #fe9c8c !important;
+      color: #ffffff !important;
     }
   }
 
-  // the scroll bar appears when the sub-menu is too long
   >.el-menu--popup {
     max-height: 100vh;
     overflow-y: auto;
 
     &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
+      background: #f6e8e6;
     }
 
     &::-webkit-scrollbar {
@@ -231,7 +326,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
+      background: #fe9c8c;
       border-radius: 20px;
     }
   }

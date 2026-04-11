@@ -2,7 +2,11 @@
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path, onlyOneChild.query)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
+        <el-menu-item
+          :index="resolvePath(onlyOneChild.path)"
+          :class="{ 'submenu-title-noDropdown': !isNest }"
+          :style="isActive(onlyOneChild.path) ? { '--el-menu-hover-bg-color': '#fe9c8c' } : {}"
+        >
           <svg-icon :icon-class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"/>
           <template #title><span class="menu-title" :title="hasTitle(onlyOneChild.meta.title)">{{ onlyOneChild.meta.title }}</span></template>
         </el-menu-item>
@@ -48,7 +52,13 @@ const props = defineProps({
   }
 })
 
+const currentRoute = useRoute()
 const onlyOneChild = ref({})
+
+function isActive(path: string): boolean {
+  const resolved = getNormalPath(props.basePath + '/' + path)
+  return currentRoute.path === resolved || currentRoute.path === path
+}
 
 function hasOneShowingChild(children: any[] = [], parent: any) {
   if (!children) {

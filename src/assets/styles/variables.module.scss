@@ -8,35 +8,44 @@ $tiffany: #4AB7BD;
 $yellow: #FEC171;
 $panGreen: #30B08F;
 
-// 默认主题变量
-$menuText: #bfcbd9;
-$menuActiveText: #409eff;
-$menuBg: #304156;
-$menuHover: #263445;
+// Pet Sanctuary 主题色
+$primary: #914539;
+$primary-container: #fe9c8c;
+$on-primary: #ffefed;
+$surface: #fcf6ed;
+$surface-container-low: #f6f0e6;
+$on-surface: #312e29;
+$on-surface-variant: #5e5b54;
+
+// 默认主题变量（暗色侧边栏 → 用主题色）
+$menuText: #f6e8e6;
+$menuActiveText: #fe9c8c;
+$menuBg: #6b281e;
+$menuHover: #7a3028;
 
 // 浅色主题theme-light
-$menuLightBg: #ffffff;
-$menuLightHover: #f0f1f5;
-$menuLightText: #303133;
-$menuLightActiveText: #409EFF;
+$menuLightBg: #fcf6ed;
+$menuLightHover: #f6e8e6;
+$menuLightText: #312e29;
+$menuLightActiveText: #914539;
 
 // 基础变量
 $base-sidebar-width: 200px;
 $sideBarWidth: 200px;
 
 // 菜单暗色变量
-$base-menu-color: #bfcbd9;
-$base-menu-color-active: #f4f4f5;
-$base-menu-background: #304156;
-$base-sub-menu-background: #1f2d3d;
-$base-sub-menu-hover: #001528;
+$base-menu-color: #f6e8e6;
+$base-menu-color-active: #fe9c8c;
+$base-menu-background: #6b281e;
+$base-sub-menu-background: #5a1f16;
+$base-sub-menu-hover: #4a1810;
 
 // 组件变量
-$--color-primary: #409EFF;
-$--color-success: #67C23A;
+$--color-primary: #914539;
+$--color-success: #006b1f;
 $--color-warning: #E6A23C;
-$--color-danger: #F56C6C;
-$--color-info: #909399;
+$--color-danger: #b31b25;
+$--color-info: #04647d;
 
 :export {
   menuText: $menuText;
@@ -71,12 +80,12 @@ $--color-info: #909399;
   --sidebar-bg: #{$menuBg};
   --sidebar-text: #{$menuText};
   --menu-hover: #{$menuHover};
-  
-  --navbar-bg: #ffffff;
-  --navbar-text: #303133;
-  
+
+  --navbar-bg: #{$surface};
+  --navbar-text: #{$on-surface};
+
   /* splitpanes default-theme 变量 */
-  --splitpanes-default-bg: #ffffff;
+  --splitpanes-default-bg: #{$surface};
 
 }
 
@@ -89,7 +98,7 @@ html.dark {
   --el-text-color-regular: #d0d0d0;
   --el-border-color: #434343;
   --el-border-color-light: #434343;
-  
+
   /* primary */
   --primary-bg: #18212b;
 
@@ -122,7 +131,7 @@ html.dark {
   --blockquote-bg: #1d1e1f;
   --blockquote-border: #303030;
   --blockquote-text: #d0d0d0;
-  
+
   /* Cron 时间表达式 模式变量 */
   --cron-border: #303030;
 
@@ -243,7 +252,7 @@ html.dark {
       background-color: var(--el-bg-color-overlay);
     }
   }
-  
+
   /* 下拉菜单样式覆盖 */
   .el-dropdown-menu__item:not(.is-disabled):focus, .el-dropdown-menu__item:not(.is-disabled):hover{
     background-color: var(--navbar-hover) !important;
@@ -255,7 +264,7 @@ html.dark {
     border-left-color: var(--blockquote-border) !important;
     color: var(--blockquote-text) !important;
   }
-  
+
   /* 时间表达式标题样式覆盖 */
   .popup-result .title {
     background: var(--cron-border);

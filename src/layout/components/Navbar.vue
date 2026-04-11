@@ -1,7 +1,8 @@
 <template>
   <div
-    class="navbar relative flex items-center overflow-hidden box-border h-[50px] bg-(--navbar-bg) shadow-[0_1px_4px_rgba(0,21,41,0.08)]"
+    class="navbar relative flex items-center overflow-hidden box-border h-[60px] rounded-full mt-4 mx-4 px-6"
     :class="'nav' + settingsStore.navType"
+    style="background: rgba(252,246,237,0.75); backdrop-filter: blur(16px); box-shadow: 0 20px 40px -15px rgba(145,69,57,0.15);"
   >
     <hamburger
       id="hamburger-container"
@@ -32,17 +33,17 @@
       <template v-if="appStore.device !== 'mobile'">
         <header-search
           id="header-search"
-          class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66]"
+          class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer"
         />
 
         <screenfull
           id="screenfull"
-          class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
+          class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
         />
 
         <el-tooltip content="主题模式" effect="dark" placement="bottom">
           <div
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
+            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
             @click="toggleTheme"
           >
             <svg-icon
@@ -61,21 +62,21 @@
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select
             id="size-select"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
+            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
           />
         </el-tooltip>
 
         <el-tooltip content="消息通知" effect="dark" placement="bottom">
           <header-notice
             id="header-notice"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
+            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
           />
         </el-tooltip>
       </template>
 
       <el-dropdown
         @command="handleCommand"
-        class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
+        class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
         trigger="hover"
       >
         <div class="relative flex items-center">

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pet Sanctuary Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-dim": "#005d1a",
+                    "surface-tint": "#914539",
+                    "surface-container-low": "#f6f0e6",
+                    "on-error": "#ffefee",
+                    "surface-container": "#ede7dd",
+                    "surface-variant": "#e2dcd1",
+                    "secondary-container": "#9ae1ff",
+                    "surface-bright": "#fcf6ed",
+                    "surface-container-highest": "#e2dcd1",
+                    "on-primary": "#ffefed",
+                    "on-primary-fixed-variant": "#6b281e",
+                    "primary-dim": "#82392e",
+                    "on-tertiary-fixed": "#004e15",
+                    "tertiary-fixed-dim": "#8ef08e",
+                    "error-container": "#fb5151",
+                    "inverse-on-surface": "#a19c95",
+                    "primary": "#914539",
+                    "on-secondary": "#e3f6ff",
+                    "on-surface-variant": "#5e5b54",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#100e09",
+                    "outline-variant": "#b1ada5",
+                    "surface-container-high": "#e8e2d7",
+                    "on-secondary-fixed": "#003d4f",
+                    "primary-fixed-dim": "#ee8f7f",
+                    "tertiary-container": "#9bff9b",
+                    "secondary-fixed-dim": "#8cd3f0",
+                    "secondary-dim": "#00576e",
+                    "surface": "#fcf6ed",
+                    "inverse-primary": "#fe9c8c",
+                    "on-primary-fixed": "#400804",
+                    "secondary": "#04647d",
+                    "secondary-fixed": "#9ae1ff",
+                    "on-tertiary": "#d0ffca",
+                    "on-tertiary-fixed-variant": "#006f21",
+                    "on-surface": "#312e29",
+                    "surface-dim": "#dad4c8",
+                    "tertiary": "#006b1f",
+                    "on-tertiary-container": "#00631d",
+                    "on-background": "#312e29",
+                    "outline": "#7a766f",
+                    "tertiary-fixed": "#9bff9b",
+                    "primary-container": "#fe9c8c",
+                    "background": "#fcf6ed",
+                    "on-error-container": "#570008",
+                    "error-dim": "#9f0519",
+                    "on-primary-container": "#5f1f16",
+                    "primary-fixed": "#fe9c8c",
+                    "on-secondary-container": "#005267",
+                    "on-secondary-fixed-variant": "#005c74",
+                    "error": "#b31b25"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Be Vietnam Pro"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-blob {
+            filter: blur(60px);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen overflow-x-hidden">
+<!-- SideNavBar Component Implementation -->
+<aside class="flex flex-col w-72 h-[calc(100vh-2rem)] p-6 fixed left-0 top-0 bg-[#fcf6ed] dark:bg-orange-950 rounded-[3rem] m-4 hidden md:flex z-50">
+<div class="mb-10 px-4">
+<h1 class="text-xl font-extrabold text-[#914539] font-headline">Pet Sanctuary</h1>
+<p class="text-sm text-[#914539]/60 font-label">The Digital Hug</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="bg-[#fe9c8c] text-white rounded-full px-6 py-3 shadow-[0_10px_20px_rgba(254,156,140,0.3)] flex items-center gap-3 transition-all scale-102 hover:rotate-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-lg">Home</span>
+</a>
+<a class="text-[#914539] px-6 py-3 opacity-70 flex items-center gap-3 hover:bg-[#fe9c8c]/20 hover:rounded-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="pets">pets</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-lg">Our Cuties</span>
+</a>
+<a class="text-[#914539] px-6 py-3 opacity-70 flex items-center gap-3 hover:bg-[#fe9c8c]/20 hover:rounded-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-lg">Happy Families</span>
+</a>
+<a class="text-[#914539] px-6 py-3 opacity-70 flex items-center gap-3 hover:bg-[#fe9c8c]/20 hover:rounded-full transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-['Plus_Jakarta_Sans'] font-medium text-lg">Treats &amp; Records</span>
+</a>
+</nav>
+<div class="mt-4 pt-4 border-t border-[#914539]/10 space-y-2">
+<a class="text-[#914539] px-6 py-3 opacity-70 flex items-center gap-3 hover:bg-[#fe9c8c]/20 hover:rounded-full transition-all font-['Plus_Jakarta_Sans'] font-medium text-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="text-[#914539] px-6 py-3 opacity-70 flex items-center gap-3 hover:bg-[#fe9c8c]/20 hover:rounded-full transition-all font-['Plus_Jakarta_Sans'] font-medium text-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+<button class="w-full mt-4 py-4 rounded-full bg-primary text-on-primary font-bold shadow-[0_12px_24px_rgba(145,69,57,0.2)] hover:scale-105 transition-transform">
+                Add New Friend
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-80 p-4 md:p-10 relative">
+<!-- TopNavBar Component Implementation -->
+<header class="bg-[#fcf6ed]/70 backdrop-blur-xl dark:bg-orange-950/70 rounded-full mt-4 mx-4 shadow-[0_20px_40px_-15px_rgba(145,69,57,0.15)] flex justify-between items-center px-8 h-20 w-full max-w-7xl mx-auto mb-12">
+<div class="flex items-center gap-4 flex-1">
+<div class="flex items-center gap-2 bg-surface-container-lowest/50 px-4 py-2 rounded-full border border-primary/10 w-full max-w-md">
+<span class="material-symbols-outlined text-[#914539] text-xl" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-['Plus_Jakarta_Sans'] text-[#914539] w-full" placeholder="Search for a pup..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#914539] dark:text-[#fe9c8c] hover:scale-105 transition-transform duration-300 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+</button>
+<button class="p-2 text-[#914539] dark:text-[#fe9c8c] hover:scale-105 transition-transform duration-300 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="contrast">contrast</span>
+</button>
+<button class="p-2 text-[#914539] dark:text-[#fe9c8c] hover:scale-105 transition-transform duration-300 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="aspect_ratio">aspect_ratio</span>
+</button>
+<button class="p-2 text-[#914539] dark:text-[#fe9c8c] hover:scale-105 transition-transform duration-300 scale-95 active:scale-90 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 hover:scale-105 transition-transform cursor-pointer">
+<img alt="User profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1YIKRRX8z6EC2Xk4eeY69XnbD8xIVyP9vpj17r5HGlUXWmRsocArA92pYKuDo0ltCIromCWzc4Z3U2Q_3w4ALk2BDvBlrFwOOEhV_mX8GqncDXyWznXw2Le3fa1YY-0Gcbb40mNleBfXC21kI3EyLFX6cMKzdArUpkeHozu3OkpYffkk2pyXRIvnpD7Io9QqgQ-WmujL0Kdgu6tkcN3XSAneq2pI60H4odxbbeWzuBOn_05lYAum_hzXpeX-kyqkW7zlQP-iAWDU"/>
+</div>
+</div>
+</header>
+<!-- Background Blobs for Asymmetry -->
+<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-primary-container/20 rounded-full bento-blob"></div>
+<div class="absolute bottom-[5%] left-[10%] w-[300px] h-[300px] bg-secondary-container/30 rounded-full bento-blob"></div>
+<!-- Greeting Section -->
+<div class="mb-12">
+<h2 class="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-primary mb-2">Good morning, Chief Pet Hugger!</h2>
+<p class="text-on-surface-variant font-label text-lg">Ready to make some tails wag today?</p>
+</div>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+<div class="relative group h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-tertiary-container rounded-xl rotate-3 group-hover:rotate-6 transition-transform"></div>
+<div class="relative z-10 bg-surface-container-lowest w-full h-full rounded-xl p-6 flex flex-col justify-between shadow-[0_15px_35px_rgba(155,255,155,0.25)] border-4 border-tertiary-container">
+<span class="material-symbols-outlined text-tertiary-dim text-4xl" data-icon="favorite">favorite</span>
+<div>
+<p class="text-tertiary-dim font-bold text-3xl">124</p>
+<p class="font-label text-sm text-on-surface-variant">Happy Adoptions</p>
+</div>
+</div>
+</div>
+<div class="relative group h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-secondary-container rounded-xl -rotate-3 group-hover:-rotate-6 transition-transform"></div>
+<div class="relative z-10 bg-surface-container-lowest w-full h-full rounded-xl p-6 flex flex-col justify-between shadow-[0_15px_35px_rgba(154,225,255,0.25)] border-4 border-secondary-container">
+<span class="material-symbols-outlined text-secondary-dim text-4xl" data-icon="pets">pets</span>
+<div>
+<p class="text-secondary-dim font-bold text-3xl">42</p>
+<p class="font-label text-sm text-on-surface-variant">New Buddies</p>
+</div>
+</div>
+</div>
+<div class="relative group h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-primary-container rounded-xl rotate-1 group-hover:rotate-4 transition-transform"></div>
+<div class="relative z-10 bg-surface-container-lowest w-full h-full rounded-xl p-6 flex flex-col justify-between shadow-[0_15px_35px_rgba(254,156,140,0.25)] border-4 border-primary-container">
+<span class="material-symbols-outlined text-on-primary-container text-4xl" data-icon="restaurant">restaurant</span>
+<div>
+<p class="text-on-primary-container font-bold text-3xl">850</p>
+<p class="font-label text-sm text-on-surface-variant">Treats Given</p>
+</div>
+</div>
+</div>
+<div class="relative group h-48 flex items-center justify-center">
+<div class="absolute inset-0 bg-surface-container-high rounded-xl -rotate-2 group-hover:-rotate-4 transition-transform"></div>
+<div class="relative z-10 bg-surface-container-lowest w-full h-full rounded-xl p-6 flex flex-col justify-between shadow-[0_15px_35px_rgba(0,0,0,0.05)] border-4 border-surface-container-high">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="volunteer_activism">volunteer_activism</span>
+<div>
+<p class="text-primary font-bold text-3xl">18</p>
+<p class="font-label text-sm text-on-surface-variant">Volunteers On-site</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Chart & Inquiries Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_50px_rgba(145,69,57,0.06)] relative overflow-hidden">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold font-headline text-primary">Daily Tail Wags</h3>
+<div class="flex gap-2">
+<div class="px-4 py-1 rounded-full bg-secondary-container/30 text-secondary-dim text-xs font-bold uppercase tracking-wider">WEEKLY VIEW</div>
+</div>
+</div>
+<div class="h-64 w-full flex items-end justify-between gap-2 px-2 relative">
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10">
+<div class="border-t border-primary w-full"></div>
+<div class="border-t border-primary w-full"></div>
+<div class="border-t border-primary w-full"></div>
+</div>
+<div class="flex flex-1 items-end justify-around relative z-10">
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl scale-75 transition-transform group-hover:scale-110" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-12 bg-primary-container/40 rounded-t-full h-24 group-hover:bg-primary-container/60 transition-colors"></div>
+<span class="text-[10px] font-label text-on-surface-variant">MON</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl scale-75 transition-transform group-hover:scale-110" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-12 bg-primary-container/40 rounded-t-full h-32 group-hover:bg-primary-container/60 transition-colors"></div>
+<span class="text-[10px] font-label text-on-surface-variant">TUE</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl scale-75 transition-transform group-hover:scale-110" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-12 bg-primary-container/40 rounded-t-full h-48 group-hover:bg-primary-container/60 transition-colors"></div>
+<span class="text-[10px] font-label text-on-surface-variant">WED</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl scale-75 transition-transform group-hover:scale-110" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-12 bg-primary-container/40 rounded-t-full h-40 group-hover:bg-primary-container/60 transition-colors"></div>
+<span class="text-[10px] font-label text-on-surface-variant">THU</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl scale-75 transition-transform group-hover:scale-110" data-icon="favorite" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-12 bg-primary-container/40 rounded-t-full h-56 group-hover:bg-primary-container/60 transition-colors"></div>
+<span class="text-[10px] font-label text-on-surface-variant">FRI</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-8 shadow-[inset_0_2px_4px_rgba(145,69,57,0.03)]">
+<h3 class="text-2xl font-bold font-headline text-primary mb-6">Recent Inquiries</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-lg hover:translate-x-2 transition-transform cursor-pointer shadow-sm">
+<img alt="Pug Profile" class="w-12 h-12 rounded-full object-cover border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1YIKRRX8z6EC2Xk4eeY69XnbD8xIVyP9vpj17r5HGlUXWmRsocArA92pYKuDo0ltCIromCWzc4Z3U2Q_3w4ALk2BDvBlrFwOOEhV_mX8GqncDXyWznXw2Le3fa1YY-0Gcbb40mNleBfXC21kI3EyLFX6cMKzdArUpkeHozu3OkpYffkk2pyXRIvnpD7Io9QqgQ-WmujL0Kdgu6tkcN3XSAneq2pI60H4odxbbeWzuBOn_05lYAum_hzXpeX-kyqkW7zlQP-iAWDU"/>
+<div class="flex-1">
+<p class="font-bold text-on-surface leading-tight">Sarah Jenkins</p>
+<p class="text-xs text-on-surface-variant font-label">Wants to meet 'Barnaby'</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-dim">
+<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-lg hover:translate-x-2 transition-transform cursor-pointer shadow-sm">
+<img alt="Beagle Profile" class="w-12 h-12 rounded-full object-cover border-2 border-secondary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX00AILCSx-HnsoTKhFsTvW77tkmfhGN7JbzhJzLi-EVURwx949oU400idN6Fw9kxe3IJNQKYhyOLVX2gGTpwrsWtkw0OqsDXHdLwmPJeL2BfPeMcdr2Z_f5Mc9oycRE8J02iMdFJWw0TGO4gnE3-td5D_VE2EyPdsRpbiLSmYYPDd_xtwIELzGDVIBMh4wKML0LTIyKjESQi4OM84sg9lKAYyl8PlQAQ1b59rS_aqVJ2zO3DJOXOuJOjWHi3nE5sIMTPrKa8-LkY"/>
+<div class="flex-1">
+<p class="font-bold text-on-surface leading-tight">Marcus Thorne</p>
+<p class="text-xs text-on-surface-variant font-label">Follow-up for 'Daisy'</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-dim">
+<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest p-4 rounded-lg hover:translate-x-2 transition-transform cursor-pointer shadow-sm">
+<img alt="Golden Retriever Profile" class="w-12 h-12 rounded-full object-cover border-2 border-tertiary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARFiE6i9itcLG9NpqHvVXrciry3lclnS5LChYfI1wpCEPnvPyEO5p5Vi4bBJatgElxMzBLR_Orta_iK0qxjQOuJOL_tb0OL5IHhz2TYF220EVYTxY7TaKDjpXf0Y98OsP5Ffs95xeBxpQ1ycjminsvy8C4j7w4kAvndRNdiXiTC05tjuv3Gc8z4PNrgDSus3q230xI806SlLlXtfIcwNPahfpukRD0_rkoPr1hUw1a0fLVMEG2wRZSH4pLyFGjAJ8oXlvyUSvdjuc"/>
+<div class="flex-1">
+<p class="font-bold text-on-surface leading-tight">Emily Chen</p>
+<p class="text-xs text-on-surface-variant font-label">Interested in volunteering</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary-dim">
+<span class="material-symbols-outlined text-sm" data-icon="chat">chat</span>
+</div>
+</div>
+<div class="mt-6 text-center">
+<button class="text-primary font-bold font-label hover:underline">View All Notifications</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Pet Floating Card -->
+<section class="mt-12 bg-primary-container/20 p-8 rounded-xl border-dashed border-2 border-primary-container flex flex-col md:flex-row items-center gap-8">
+<div class="w-32 h-32 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-xl rotate-[-3deg]">
+<img alt="Cutest Friend of the Week" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmWF3dTlBBjVthxAVJ6AjLBhZinHO03Zyj29fsi1dpI8JpZxbC3ygd056sDFasaXhLH05ZZw4gkH_kTnKX7AzFxG3EMvz54j4cuD7Gc3TpAoCnje9v2fqKuf_TFm7onpJY6NGe8_Cr-2GCO5-Q_WO1nHcF3XYiBxrvYz99pc2NlX52AFXDR0NnijwhRFypc8pz4HvIn8l6SJECWYTS8dQ1HACfwV-FFstIP54d1dVnfC8Fn3PicCtLsCPq5dBZVZnxCeJ91YIB3qk"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<span class="bg-primary text-on-primary px-4 py-1 rounded-full text-xs font-bold mb-4 inline-block">PET OF THE WEEK</span>
+<h4 class="text-3xl font-extrabold font-headline text-primary mb-2">Barnaby the Brave</h4>
+<p class="text-on-surface-variant max-w-xl mb-6">Barnaby is a 2-year-old rescue who loves morning cuddles and chase games. He's been the star of our sanctuary this week!</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform">Schedule Meeting</button>
+<button class="bg-surface-container-lowest text-primary px-8 py-3 rounded-full font-bold border border-primary/20 hover:bg-surface-container-high transition-colors">See Profile</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Nav for Mobile -->
+<nav class="md:hidden fixed bottom-6 left-6 right-6 bg-surface-container-lowest/80 backdrop-blur-xl h-20 rounded-full shadow-[0_20px_40px_rgba(145,69,57,0.15)] flex items-center justify-around px-4 z-50">
+<button class="p-4 text-primary bg-primary-container rounded-full scale-110">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+</button>
+<button class="p-4 text-primary/60">
+<span class="material-symbols-outlined" data-icon="pets">pets</span>
+</button>
+<button class="p-4 text-primary/60">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="p-4 text-primary/60">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</button>
+</nav>
+</body></html>

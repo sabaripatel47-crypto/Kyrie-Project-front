@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ backgroundColor: getMenuBackground }"
+    :style="{ background: getMenuBackground }"
     :class="{ 'has-logo': showLogo }"
     class="sidebar-container"
   >
@@ -9,14 +9,14 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="getMenuBackground"
-        :text-color="getMenuTextColor"
+        :background-color="''"
+        :text-color="''"
         :unique-opened="true"
-        :active-text-color="theme"
+        :active-text-color="'#ffffff'"
         :collapse-transition="false"
         mode="vertical"
         :class="sideTheme"
-        class="!border-none !h-full !w-full"
+        class="border-none! h-full! w-full!"
       >
         <sidebar-item
           v-for="(route, index) in sidebarRouters"
@@ -32,7 +32,6 @@
 <script setup lang="ts">
 import Logo from "./Logo.vue";
 import SidebarItem from "./SidebarItem.vue";
-import variables from "@/assets/styles/variables.module.scss";
 import useAppStore from "@/store/modules/app";
 import useSettingsStore from "@/store/modules/settings";
 import usePermissionStore from "@/store/modules/permission";
@@ -45,21 +44,16 @@ const permissionStore = usePermissionStore();
 const sidebarRouters = computed(() => permissionStore.sidebarRouters);
 const showLogo = computed(() => settingsStore.sidebarLogo);
 const sideTheme = computed(() => settingsStore.sideTheme);
-const theme = computed(() => settingsStore.theme);
 const isCollapse = computed(() => !appStore.sidebar.opened);
 
 const getMenuBackground = computed(() => {
   if (settingsStore.isDark) return "var(--sidebar-bg)";
-  return sideTheme.value === "theme-dark"
-    ? variables.menuBg
-    : variables.menuLightBg;
+  return "linear-gradient(160deg, #fde8e4 0%, #fcf6ed 60%, #fdf4ec 100%)";
 });
 
 const getMenuTextColor = computed(() => {
   if (settingsStore.isDark) return "var(--sidebar-text)";
-  return sideTheme.value === "theme-dark"
-    ? variables.menuText
-    : variables.menuLightText;
+  return "#914539";
 });
 
 const activeMenu = computed(() => {
@@ -71,16 +65,11 @@ const activeMenu = computed(() => {
 
 <style scoped>
 .scrollbar-wrapper {
-  background-color: v-bind(getMenuBackground);
+  background-color: transparent;
 }
 
-.el-menu .el-menu-item:hover,
-.el-menu .el-sub-menu__title:hover {
-  background-color: var(--menu-hover, rgba(0, 0, 0, 0.06)) !important;
-}
-
-.el-menu .el-menu-item.is-active {
-  color: var(--menu-active-text, #409eff);
-  background-color: var(--menu-hover, rgba(0, 0, 0, 0.06)) !important;
+:deep(.el-menu-item.is-active:hover) {
+  background-color: #fe9c8c !important;
+  transform: rotate(1deg);
 }
 </style>
