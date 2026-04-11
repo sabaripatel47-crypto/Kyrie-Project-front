@@ -35,20 +35,6 @@
           class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66]"
         />
 
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git
-            id="ruoyi-git"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
-          />
-        </el-tooltip>
-
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc
-            id="ruoyi-doc"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
-          />
-        </el-tooltip>
-
         <screenfull
           id="screenfull"
           class="inline-flex items-center px-2 h-full text-[18px] text-[#5a5e66] cursor-pointer transition-[background] duration-300 hover:bg-black/2.5"
@@ -133,8 +119,6 @@ import Hamburger from "@/components/Hamburger/index.vue";
 import Screenfull from "@/components/Screenfull/index.vue";
 import SizeSelect from "@/components/SizeSelect/index.vue";
 import HeaderSearch from "@/components/HeaderSearch/index.vue";
-import RuoYiGit from "@/components/RuoYi/Git/index.vue";
-import RuoYiDoc from "@/components/RuoYi/Doc/index.vue";
 import useAppStore from "@/store/modules/app";
 import useUserStore from "@/store/modules/user";
 import useLockStore from "@/store/modules/lock";

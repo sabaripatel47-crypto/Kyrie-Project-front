@@ -6,8 +6,7 @@
     <img
       v-if="logo"
       :src="logo"
-      class="w-8 h-8"
-      :class="collapse ? '' : 'mr-3'"
+      :class="collapse ? 'w-12' : 'mr-3 w-24'"
     />
     <h1
       v-if="!collapse"

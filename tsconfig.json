@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
+    // 编译结果以最新ES6为标准,不降级
     "target": "esnext",
+    //保留 ES Module（import/export），不转换成 CommonJS(require)
     "module": "esnext",
+    // 最新路径解析方式,支持import,路径别名(老的为node)
     "moduleResolution": "bundler",
+    // 可以使用那些API:esnext:最新JS能力(promise,aysnc,await,Array.from)
     "lib": ["esnext", "dom"],
+    // 不写根路径,默认从tsconfig.json所在路径开始
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
@@ -25,7 +30,7 @@
     "allowJs": true,
     "noEmit": true,
 
-    // 类型声明相关配置
+    // 类型声明相关配置,node:使用node.js的全局变量和API,不让TS报错(需安装pnpm i -D @types/node)
     "types": ["node", "vite/client", "element-plus/global"]
   },
   "include": [
