@@ -45,12 +45,15 @@
       ref="subMenu"
       :index="resolvePath(item.path)"
       teleported
+      @open="isOpened = true"
+      @close="isOpened = false"
     >
       <template v-if="item.meta" #title>
         <svg-icon :icon-class="item.meta && item.meta.icon" />
         <span class="menu-title" :title="hasTitle(item.meta.title)">{{
           item.meta.title
         }}</span>
+        <svg-icon icon-class="paw-up" class="custom-arrow shrink-0" />
       </template>
 
       <sidebar-item
@@ -91,6 +94,22 @@ import useSettingsStore from "@/store/modules/settings";
 const settingsStore = useSettingsStore();
 const currentRoute = useRoute();
 const onlyOneChild = ref({});
+const isOpened = ref(false);
+
+// 判断当前路由是否在此菜单下，用于初始化展开状态
+const isCurrentMenuActive = computed(
+  () =>
+    currentRoute.path.startsWith(props.basePath + "/") ||
+    currentRoute.path === props.basePath
+);
+
+watch(
+  isCurrentMenuActive,
+  (val) => {
+    if (val) isOpened.value = true;
+  },
+  { immediate: true }
+);
 
 function isActive(path: string): boolean {
   const resolved = getNormalPath(props.basePath + "/" + path);
