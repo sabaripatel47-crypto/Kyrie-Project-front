@@ -47,7 +47,8 @@ const sideTheme = computed(() => settingsStore.sideTheme);
 const isCollapse = computed(() => !appStore.sidebar.opened);
 
 const getMenuBackground = computed(() => {
-  if (settingsStore.isDark) return "var(--sidebar-bg)";
+  if (settingsStore.isDark)
+    return "linear-gradient(180deg, #161926 0%, #0b0e18 100%)";
   return "linear-gradient(160deg, #fde8e4 0%, #fcf6ed 60%, #fdf4ec 100%)";
 });
 

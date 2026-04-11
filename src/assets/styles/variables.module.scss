@@ -92,60 +92,90 @@ $--color-info: #04647d;
 // 暗黑模式变量
 html.dark {
   /* 默认通用 */
-  --el-bg-color: #141414;
-  --el-bg-color-overlay: #1d1e1f;
-  --el-text-color-primary: #ffffff;
-  --el-text-color-regular: #d0d0d0;
-  --el-border-color: #434343;
-  --el-border-color-light: #434343;
+  --el-bg-color: #0b0e18;
+  --el-bg-color-overlay: #161926;
+  --el-text-color-primary: #ececfd;
+  --el-text-color-regular: #a9aab9;
+  --el-border-color: #454754;
+  --el-border-color-light: #454754;
+  --el-color-primary: #ff85c9;
+  --el-color-primary-light-3: #ffaad9;
+  --el-color-primary-light-5: #ffbfe3;
+  --el-color-primary-light-7: #ffd4ed;
+  --el-color-primary-light-8: #ffdff2;
+  --el-color-primary-light-9: #ffeef8;
+  --el-color-primary-dark-2: #e06aad;
 
   /* primary */
-  --primary-bg: #18212b;
+  --primary-bg: #1c1f2e;
 
   /* 侧边栏 */
-  --sidebar-bg: #141414;
-  --sidebar-text: #ffffff;
-  --menu-hover: #2d2d2d;
-  --menu-active-text: #{$menuActiveText};
+  --sidebar-bg: #161926;
+  --sidebar-text: #a9aab9;
+  --menu-hover: #222535;
+  --menu-active-text: #0b0e18;
 
   /* 顶部导航栏 */
-  --navbar-bg: #141414;
-  --navbar-text: #ffffff;
-  --navbar-hover: #141414;
+  --navbar-bg: rgba(11, 14, 24, 0.6);
+  --navbar-text: #ececfd;
+  --navbar-hover: #222535;
 
   /* 标签栏 */
-  --tags-bg: #141414;
-  --tags-item-bg: #1d1e1f;
-  --tags-item-border: #303030;
-  --tags-item-text: #d0d0d0;
-  --tags-item-hover: #2d2d2d;
-  --tags-close-hover: #64666a;
+  --tags-bg: #0b0e18;
+  --tags-item-bg: #161926;
+  --tags-item-border: #454754;
+  --tags-item-text: #a9aab9;
+  --tags-item-hover: #222535;
+  --tags-close-hover: #454754;
 
   /* splitpanes 组件暗黑模式变量 */
-  --splitpanes-bg: #141414;
-  --splitpanes-border: #303030;
-  --splitpanes-splitter-bg: #1d1e1f;
-  --splitpanes-splitter-hover-bg: #2d2d2d;
+  --splitpanes-bg: #0b0e18;
+  --splitpanes-border: #454754;
+  --splitpanes-splitter-bg: #161926;
+  --splitpanes-splitter-hover-bg: #222535;
 
   /* blockquote 暗黑模式变量 */
-  --blockquote-bg: #1d1e1f;
-  --blockquote-border: #303030;
-  --blockquote-text: #d0d0d0;
+  --blockquote-bg: #161926;
+  --blockquote-border: #454754;
+  --blockquote-text: #a9aab9;
 
   /* Cron 时间表达式 模式变量 */
-  --cron-border: #303030;
+  --cron-border: #454754;
 
   /* splitpanes default-theme 暗黑模式变量 */
-  --splitpanes-default-bg: #141414;
+  --splitpanes-default-bg: #0b0e18;
 
   /* 侧边栏菜单覆盖 */
   .sidebar-container {
+    --el-menu-hover-bg-color: #222535;
+    --el-menu-bg-color: transparent;
+    --el-menu-text-color: #a9aab9;
+    --el-menu-active-color: #0b0e18;
+
     .el-menu-item:not(.is-active), .menu-title {
       color: var(--el-text-color-regular);
     }
+
+    .el-sub-menu > .el-sub-menu__title {
+      color: #a9aab9 !important;
+      * { color: #a9aab9 !important; }
+    }
+
+    .el-menu-item.is-active {
+      background-color: #ff85c9 !important;
+      color: #0b0e18 !important;
+      box-shadow: 0 0 15px rgba(255, 133, 201, 0.4);
+      * { color: #0b0e18 !important; }
+
+      &:hover {
+        --el-menu-hover-bg-color: #ff85c9;
+        background-color: #ff85c9 !important;
+      }
+    }
+
     & .theme-dark .nest-menu .el-sub-menu>.el-sub-menu__title,
     & .theme-dark .el-sub-menu .el-menu-item {
-      background-color: var(--el-bg-color) !important;
+      background-color: transparent !important;
     }
   }
 

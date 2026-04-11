@@ -2,7 +2,11 @@
   <div
     class="navbar relative flex items-center overflow-hidden box-border h-[60px] rounded-full mt-4 mx-4 px-6"
     :class="'nav' + settingsStore.navType"
-    style="background: rgba(252,246,237,0.75); backdrop-filter: blur(16px); box-shadow: 0 20px 40px -15px rgba(145,69,57,0.15);"
+    :style="
+      settingsStore.isDark
+        ? 'background: rgba(11,14,24,0.6); backdrop-filter: blur(16px); box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid rgba(69,71,84,0.3);'
+        : 'background: rgba(252,246,237,0.75); backdrop-filter: blur(16px); box-shadow: 0 20px 40px -15px rgba(145,69,57,0.15);'
+    "
   >
     <hamburger
       id="hamburger-container"
@@ -33,17 +37,28 @@
       <template v-if="appStore.device !== 'mobile'">
         <header-search
           id="header-search"
-          class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer"
+          class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer"
+          :class="settingsStore.isDark ? 'text-[#a9aab9]' : 'text-[#914539]'"
         />
 
         <screenfull
           id="screenfull"
-          class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
+          class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+          :class="
+            settingsStore.isDark
+              ? 'text-[#a9aab9] hover:bg-[#222535]'
+              : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+          "
         />
 
         <el-tooltip content="主题模式" effect="dark" placement="bottom">
           <div
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
+            class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+            :class="
+              settingsStore.isDark
+                ? 'text-[#a9aab9] hover:bg-[#222535]'
+                : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+            "
             @click="toggleTheme"
           >
             <svg-icon
@@ -62,21 +77,36 @@
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select
             id="size-select"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
+            class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+            :class="
+              settingsStore.isDark
+                ? 'text-[#a9aab9] hover:bg-[#222535]'
+                : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+            "
           />
         </el-tooltip>
 
         <el-tooltip content="消息通知" effect="dark" placement="bottom">
           <header-notice
             id="header-notice"
-            class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
+            class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+            :class="
+              settingsStore.isDark
+                ? 'text-[#a9aab9] hover:bg-[#222535]'
+                : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+            "
           />
         </el-tooltip>
       </template>
 
       <el-dropdown
         @command="handleCommand"
-        class="inline-flex items-center px-2 h-full text-[18px] text-[#914539] cursor-pointer transition-[background] duration-300 hover:bg-[#fe9c8c]/20 rounded-full"
+        class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+        :class="
+          settingsStore.isDark
+            ? 'text-[#a9aab9] hover:bg-[#222535]'
+            : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+        "
         trigger="hover"
       >
         <div class="relative flex items-center">

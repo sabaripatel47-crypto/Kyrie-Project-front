@@ -1,17 +1,37 @@
 <template>
-  <div class="px-6 pt-6 pb-4">
+  <div
+    class="flex items-center gap-2"
+    :class="collapse ? 'px-2 pt-4 pb-3 justify-center' : 'px-4 pt-6 pb-4'"
+  >
+    <img
+      v-if="logo"
+      :src="logo"
+      :class="collapse ? 'w-10' : 'w-18'"
+      class="object-contain shrink-0"
+    />
     <template v-if="!collapse">
-      <h1 class="text-xl font-extrabold text-[#914539] m-0 leading-tight">{{ title }}</h1>
-      <p class="text-sm text-[#914539]/60 m-0 mt-0.5">The Digital Hug</p>
-    </template>
-    <template v-else>
-      <img v-if="logo" :src="logo" class="w-8 h-8 object-contain" />
+      <div>
+        <h1
+          class="text-sm font-extrabold m-0 leading-tight"
+          :class="settingsStore.isDark ? 'text-[#ff85c9]' : 'text-[#914539]'"
+        >
+          {{ title }}
+        </h1>
+        <p
+          class="text-xs m-0 mt-0.5"
+          :class="settingsStore.isDark ? 'text-[#a9aab9]' : 'text-[#914539]/60'"
+        >
+          The Digital Hug
+        </p>
+      </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import logo from "@/assets/logo/logo.png";
+
+import useSettingsStore from "@/store/modules/settings";
 
 defineProps({
   collapse: {
@@ -21,4 +41,5 @@ defineProps({
 });
 
 const title = import.meta.env.VITE_APP_TITLE;
+const settingsStore = useSettingsStore();
 </script>
