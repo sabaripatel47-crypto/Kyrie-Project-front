@@ -21,9 +21,31 @@
       </el-collapse-item>
     </el-collapse>
   </div>
+  <div class="bg-green-400 p-5">
+    省市区选择
+    <!-- emitPath设为false,选择最后一个区的区号 -->
+    <el-cascader
+      v-model="selectedArea"
+      :options="areaData"
+      :props="{
+        value: 'value',
+        label: 'label',
+        children: 'children',
+        emitPath: false,
+      }"
+      placeholder="请选择省/市/区"
+      clearable
+    />
+    <p v-if="selectedArea">已选：{{ selectedArea }}</p>
+  </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { regionData } from "element-china-area-data";
+
+const areaData = regionData;
+const selectedArea = ref<string>("");
 </script>
 
 <style>
