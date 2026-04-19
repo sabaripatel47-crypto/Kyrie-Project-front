@@ -1,0 +1,211 @@
+// =============================================================================
+// El-Pagination Override — Pet Sanctuary
+// src/assets/styles/element-plus/pagination.scss
+// =============================================================================
+
+.el-pagination {
+  // ── 上一页 / 下一页 按钮 ────────────────────────────────────────────────────
+  // 用 .is-background 提升优先级，覆盖 Element Plus 默认的 is-background 规则
+  &.is-background .btn-prev,
+  &.is-background .btn-next {
+    background-color: #f6f0e6;
+    border: 1px solid #e2dcd1;
+    border-radius: 0.75rem;
+    color: #5e5b54;
+    transition: background-color 0.18s, border-color 0.18s, color 0.18s;
+
+    &:hover:not(:disabled) {
+      background-color: #fff8f4;
+      border-color: #fe9c8c;
+      color: #914539;
+    }
+
+    &:disabled {
+      background-color: #fcf6ed;
+      border-color: #e2dcd1;
+      color: #c4bfb8;
+      cursor: not-allowed;
+    }
+
+    // SVG 图标颜色跟随 color
+    .el-icon {
+      color: inherit;
+    }
+  }
+
+  // ── 页码 ────────────────────────────────────────────────────────────────────
+  .el-pager li {
+    background-color: #f6f0e6;
+    border: 1px solid #e2dcd1;
+    border-radius: 0.75rem;
+    color: #5e5b54;
+    transition: background-color 0.18s, border-color 0.18s, color 0.18s;
+
+    &:hover:not(.is-active) {
+      background-color: #fff8f4;
+      border-color: #fe9c8c;
+      color: #914539;
+    }
+
+    &.is-active {
+      background-color: #914539;
+      border-color: #914539;
+      color: #fcf6ed;
+    }
+  }
+
+  // ── 每页条数下拉框 ──────────────────────────────────────────────────────────
+  .el-pagination__sizes {
+    .el-select__wrapper {
+      background-color: #f6f0e6;
+      border: 1px solid #e2dcd1;
+      border-radius: 0.75rem;
+      box-shadow: none;
+      color: #312e29;
+      transition: border-color 0.18s, background-color 0.18s;
+
+      &:hover {
+        border-color: #fe9c8c;
+        background-color: #fff8f4;
+      }
+
+      &.is-focused {
+        border-color: #914539;
+      }
+    }
+
+    // 下拉箭头图标
+    .el-select__caret {
+      color: #5e5b54;
+    }
+
+    // 已选中文字
+    .el-select__placeholder span {
+      color: #312e29;
+    }
+  }
+
+  // ── 跳页输入框 ──────────────────────────────────────────────────────────────
+  .el-pagination__editor.el-input {
+    .el-input__wrapper {
+      background-color: #f6f0e6;
+      border: 1px solid #e2dcd1;
+      border-radius: 0.75rem;
+      box-shadow: none;
+      transition: border-color 0.18s, background-color 0.18s;
+
+      &:hover {
+        border-color: #fe9c8c;
+        background-color: #fff8f4;
+      }
+
+      &.is-focus {
+        border-color: #914539;
+        box-shadow: none;
+      }
+    }
+
+    .el-input__inner {
+      color: #312e29;
+    }
+  }
+
+  // ── 文字（共 N 条 / 前往 / 页）──────────────────────────────────────────────
+  .el-pagination__total,
+  .el-pagination__goto,
+  .el-pagination__classifier {
+    color: #5e5b54;
+  }
+}
+
+// ── Dark mode ──────────────────────────────────────────────────────────────────
+.dark .el-pagination,
+[data-theme="dark"] .el-pagination {
+  &.is-background .btn-prev,
+  &.is-background .btn-next {
+    background-color: #161926;
+    border-color: #2a2e42;
+    color: #ececfd;
+
+    &:hover:not(:disabled) {
+      background-color: #1e1530;
+      border-color: #f672be;
+      color: #ff85c9;
+    }
+
+    &:disabled {
+      background-color: #0f1120;
+      border-color: #1e2235;
+      color: #555870;
+    }
+  }
+
+  .el-pager li {
+    background-color: #161926;
+    border-color: #2a2e42;
+    color: #ececfd;
+
+    &:hover:not(.is-active) {
+      background-color: #1e1530;
+      border-color: #f672be;
+      color: #ff85c9;
+    }
+
+    &.is-active {
+      background-color: #f672be;
+      border-color: #f672be;
+      color: #0b0e18;
+    }
+  }
+
+  .el-pagination__sizes {
+    .el-select__wrapper {
+      background-color: #161926;
+      border-color: #2a2e42;
+      color: #ececfd;
+
+      &:hover {
+        border-color: #f672be;
+        background-color: #1e1530;
+      }
+
+      &.is-focused {
+        border-color: #ff85c9;
+      }
+    }
+
+    .el-select__caret {
+      color: #ececfd;
+    }
+
+    .el-select__placeholder span {
+      color: #ececfd;
+    }
+  }
+
+  .el-pagination__editor.el-input {
+    .el-input__wrapper {
+      background-color: #161926;
+      border-color: #2a2e42;
+
+      &:hover {
+        border-color: #f672be;
+        background-color: #1e1530;
+      }
+
+      &.is-focus {
+        border-color: #ff85c9;
+      }
+    }
+
+    .el-input__inner {
+      color: #ececfd;
+    }
+  }
+
+  .el-pagination__total,
+  .el-pagination__goto,
+  .el-pagination__classifier {
+    color: #ececfd;
+  }
+}

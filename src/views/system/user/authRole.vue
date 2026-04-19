@@ -1,6 +1,6 @@
 <template>
    <div class="app-container">
-      <h4 class="form-header h4">基本信息</h4>
+      <h4 class="  h4">基本信息</h4>
       <el-form :model="form" label-width="80px">
          <el-row>
             <el-col :span="8" :offset="2">
@@ -16,7 +16,7 @@
          </el-row>
       </el-form>
 
-      <h4 class="form-header h4">角色信息</h4>
+      <h4 class="  h4">角色信息</h4>
       <el-table v-loading="loading" :row-key="getRowKey" @row-click="clickRow" ref="roleRef" @selection-change="handleSelectionChange" :data="roles.slice((pageNum - 1) * pageSize, pageNum * pageSize)">
          <el-table-column label="序号" width="55" type="index" align="center">
             <template #default="scope">

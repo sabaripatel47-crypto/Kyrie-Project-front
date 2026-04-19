@@ -3,6 +3,11 @@
     <!-- 去除线 -->
     <p><s>去除线</s></p>
   </div>
+  <div class="bg-orange-200 p-5">
+    <div>
+      <button class="blue-btn demo-btn">blue-btn(伪元素和mixin的使用)</button>
+    </div>
+  </div>
   <div class="bg-purple-400 p-5">
     手风琴
     <!-- accordion:同时只能打开一个collapse,像手风琴一样 -->
@@ -41,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { regionData } from "element-china-area-data";
 
 const areaData = regionData;
@@ -49,4 +53,28 @@ const selectedArea = ref<string>("");
 </script>
 
 <style>
+.demo-btn {
+  position: relative;
+  padding: 10px 14px;
+  border-radius: 9999px;
+  font-weight: 800;
+  color: #fff;
+  /* 伪元素 */
+  &::before{
+    content: '★';
+  }
+  &::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 1.3s;
+}
+  &:hover::after {
+    width: 100%;
+  }
+}
 </style>

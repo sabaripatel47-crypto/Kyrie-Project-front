@@ -9,230 +9,105 @@
     position: relative;
   }
 
-  .sidebarHide {
-    margin-left: 0!important;
-  }
 
   .sidebar-container {
     transition: width 0.28s;
+    // 宽度,用来实现慢慢收缩的效果
     width: vars.$base-sidebar-width !important;
-    height: calc(100vh - 2rem);
+    // 固定在页面容器上
     position: fixed;
-    font-size: 0px;
+    
+    // 调整位置
     top: 1rem;
     bottom: 1rem;
     left: 1rem;
     z-index: 1001;
-    overflow: hidden;
     border-radius: 2rem;
+    // 菜单内容超过菜单高度隐藏
+    overflow: hidden;
+    // 增加shadow,让其与背景色区分开,不然看不出左侧菜单区域
     box-shadow: 0 20px 40px rgba(145, 69, 57, 0.15);
 
     --el-menu-hover-bg-color: rgba(254, 156, 140, 0.2);
     --el-menu-bg-color: transparent;
     --el-menu-text-color: #914539;
     --el-menu-active-color: #ffffff;
-
-    .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
-    }
-
-    .scrollbar-wrapper {
-      overflow-x: hidden !important;
-    }
-
-    .el-scrollbar__bar.is-vertical {
-      right: 0px;
-    }
-
-    .el-scrollbar {
-      height: 100%;
-    }
-
-    &.has-logo {
-      .el-scrollbar {
-        height: calc(100% - 80px);
-      }
-    }
-
-    .is-horizontal {
-      display: none;
-    }
-
-    a {
-      display: inline-block;
-      width: 100%;
-      overflow: hidden;
-    }
-
+    // 图标和菜单名距离
     .svg-icon {
       margin-right: 10px !important;
     }
 
-    .el-menu {
-      border: none;
-      height: 100%;
-      width: 100% !important;
-    }
-
-    .el-menu-item, .menu-title {
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-    }
-
+    // 无子菜单的菜单的样式,主要是防止收缩后菜单消失
     .el-menu-item .el-menu-tooltip__trigger {
-      padding: 0 16px;
+      padding: 0 16px;//收起时调整图标位置
       display: inline-block !important;
     }
 
     .el-sub-menu {
+      // 有子菜单的菜单的样式
       > .el-sub-menu__title {
-        color: #914539 !important;
-        background-color: transparent !important;
         border-radius: 0.75rem !important;
+        // 让有子菜单的菜单位置和没子菜单的菜单一样
         margin: 3px 12px !important;
-        width: calc(100% - 24px) !important;
-        display: flex !important;
-        align-items: center !important;
-        padding-right: 12px !important;
-
+        // 去除默认padding,让收起图标在最右边
+        padding-right: 0px !important;
+        // 去除原始收起图标
         .el-sub-menu__icon-arrow {
           display: none !important;
         }
 
         .custom-arrow {
+          // 让收起图标在最右边
           margin-left: auto !important;
-          margin-right: 0 !important;
+          display: inline-block;
+          transform: rotate(0deg);
           transition: transform 0.3s ease;
-          flex-shrink: 0;
         }
-
+        // .el-sub-menu__title 里面 所有元素 的文字颜色都变成 #914539
         * {
           color: #914539 !important;
         }
-
-        &:hover {
-          background-color: rgba(254, 156, 140, 0.2) !important;
-        }
       }
-
+      // 菜单打开时arrow图标旋转
       &.is-opened > .el-sub-menu__title {
-        color: #914539 !important;
-
         .custom-arrow {
           transform: rotate(180deg);
-          transition: transform 0.3s ease;
         }
       }
 
-      .el-menu {
-        background-color: transparent !important;
-      }
     }
 
-    .sub-menu-title-noDropdown {
-      color: #914539 !important;
-      background-color: transparent !important;
-      border-radius: 0.75rem !important;
-      margin: 3px 12px !important;
-
-      &:hover {
-        background-color: rgba(254, 156, 140, 0.2) !important;
-      }
-    }
-
+    // 没子菜单的菜单样式
     .el-menu-item {
-      color: #914539 !important;
+      // 让有子菜单的菜单位置和没子菜单的菜单一样
+      margin: 3px 12px;
       border-radius: 0.75rem !important;
-      margin: 3px 12px !important;
-      width: calc(100% - 24px) !important;
-      height: 44px !important;
-      line-height: 44px !important;
-      background-color: transparent !important;
-      opacity: 0.75;
-
-      * { color: inherit !important; }
-
-      &:hover {
-        background-color: rgba(254, 156, 140, 0.2) !important;
-        color: #914539 !important;
-        opacity: 1;
-      }
-
       &.is-active {
+        transition: transform 0.2s ease;
         background-color: #fe9c8c !important;
         color: #ffffff !important;
-        opacity: 1;
-        box-shadow: 0 8px 20px rgba(254, 156, 140, 0.4);
-        transition: transform 0.2s ease;
-
-        * { color: #ffffff !important; }
-
-        &:hover,
-        &:focus,
-        &:hover:focus {
-          background-color: #fe9c8c !important;
-          transform: rotate(1deg);
+        &:focus {
+          transform: rotate(0deg);
+        }
+        &:hover {
+          transform: rotate(3deg);
         }
       }
     }
 
-    & .theme-dark .is-active > .el-sub-menu__title {
-      color: #ffffff !important;
-    }
-
-    & .nest-menu .el-sub-menu>.el-sub-menu__title,
-    & .el-sub-menu .el-menu-item {
-      color: #914539 !important;
-      border-radius: 0.75rem !important;
-      margin: 3px 12px !important;
-      width: calc(100% - 24px) !important;
-      background-color: transparent !important;
-      padding-left: 32px !important;
-
-      * { color: inherit !important; }
-
-      &:hover {
-        background-color: rgba(254, 156, 140, 0.2) !important;
-        color: #914539 !important;
-      }
-
-      &.is-active {
-        background-color: #fe9c8c !important;
-        color: #ffffff !important;
-        box-shadow: 0 8px 20px rgba(254, 156, 140, 0.4);
-        transition: transform 0.2s ease;
-
-        * { color: #ffffff !important; }
-
-        &:hover,
-        &:focus,
-        &:hover:focus {
-          background-color: #fe9c8c !important;
-          transform: rotate(1deg);
-        }
-      }
-    }
-
-    & .theme-dark .nest-menu .el-sub-menu>.el-sub-menu__title,
-    & .theme-dark .el-sub-menu .el-menu-item {
-      background-color: transparent;
-
-      &:hover {
-        background-color: rgba(254, 156, 140, 0.2) !important;
-      }
-    }
   }
-
+  // 收起菜单
   .hideSidebar {
     .sidebar-container {
+       // 收起菜单后的菜单宽度
       width: 54px !important;
     }
-
+    // 收起菜单时减少菜单宽度,让页面区域宽度变大
     .main-container {
       margin-left: calc(54px + 2rem);
     }
 
+    // 去除箭头,防止挤占空间
     .custom-arrow {
       display: none !important;
     }
@@ -240,35 +115,19 @@
     .el-menu-item,
     .el-sub-menu > .el-sub-menu__title {
       margin: 3px 4px !important;
-      width: calc(100% - 8px) !important;
-      padding: 0 !important;
+
     }
 
-    .sub-menu-title-noDropdown {
-      padding: 0 !important;
-      position: relative;
-
-      .el-tooltip {
-        padding: 0 !important;
-
-        .svg-icon {
-          margin-left: 20px;
-        }
-      }
-    }
 
     .el-sub-menu {
-      overflow: hidden;
-
       &>.el-sub-menu__title {
         padding: 0 !important;
-
         .svg-icon {
           margin-left: 16px;
         }
       }
     }
-
+    // 去除所有文字
     .el-menu--collapse {
       .el-sub-menu {
         &>.el-sub-menu__title {
@@ -291,44 +150,25 @@
     }
   }
 
-  .el-menu--collapse .el-menu .el-sub-menu {
-    min-width: vars.$base-sidebar-width !important;
-  }
 
+// 手机端菜单
   .mobile {
+    // 让页面区域占尽所有空间
     .main-container {
       margin-left: 0px;
     }
-
-    .sidebar-container {
-      transition: transform .28s;
-      width: vars.$base-sidebar-width !important;
-    }
-
     &.hideSidebar {
       .sidebar-container {
-        pointer-events: none;
         transition-duration: 0.3s;
+        // 把这个元素在 X 轴方向向左移动一个“侧边栏宽度”的距离,参数分别为移动,缩放,旋转
         transform: translate3d(-(vars.$base-sidebar-width), 0, 0);
       }
     }
   }
 
-  .withoutAnimation {
-    .main-container,
-    .sidebar-container {
-      transition: none;
-    }
-  }
 }
-
+// 收缩后有子菜单的子菜单弹窗样式
 .el-menu--vertical {
-  &>.el-menu {
-    .svg-icon {
-      margin-right: 16px;
-    }
-  }
-
   .nest-menu .el-sub-menu>.el-sub-menu__title,
   .el-menu-item {
     color: #914539 !important;
@@ -344,36 +184,18 @@
     }
   }
 
-  >.el-menu--popup {
-    max-height: 100vh;
-    overflow-y: auto;
-
-    &::-webkit-scrollbar-track-piece {
-      background: #f6e8e6;
-    }
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #fe9c8c;
-      border-radius: 20px;
-    }
-  }
 }
-
+// 暗黑模式下菜单样式
 html.dark {
   #app .sidebar-container {
     --el-menu-hover-bg-color: #222535;
     --el-menu-bg-color: transparent;
     --el-menu-text-color: #ffffff;
     --el-menu-active-color: #0b0e18;
-    box-shadow: 10px 0 30px rgba(255, 121, 198, 0.05);
+   box-shadow: 10px 0 30px rgba(255, 105, 180, 0.15);
 
     .el-sub-menu {
       > .el-sub-menu__title {
-        color: #ffffff !important;
         * { color: #ffffff !important; }
 
         .custom-arrow {
@@ -395,13 +217,8 @@ html.dark {
       }
     }
 
-    .sub-menu-title-noDropdown {
-      color: #ffffff !important;
-      &:hover { background-color: #222535 !important; }
-    }
-
     .el-menu-item {
-      color: #ffffff !important;
+      * { color: #ffffff !important; }
 
       &:hover {
         background-color: #222535 !important;
@@ -412,36 +229,10 @@ html.dark {
         background-color: #ff85c9 !important;
         color: #0b0e18 !important;
         box-shadow: 0 0 15px rgba(255, 133, 201, 0.4);
-        * { color: #0b0e18 !important; }
-
-        &:hover, &:focus, &:hover:focus {
-          background-color: #ff85c9 !important;
-        }
       }
     }
 
-    .el-sub-menu .el-menu-item,
-    .nest-menu .el-sub-menu > .el-sub-menu__title {
-      color: #ffffff !important;
-
-      &:hover {
-        background-color: #222535 !important;
-        color: #ffffff !important;
-      }
-
-      &.is-active {
-        background-color: #ff85c9 !important;
-        color: #0b0e18 !important;
-        box-shadow: 0 0 15px rgba(255, 133, 201, 0.4);
-        * { color: #0b0e18 !important; }
-
-        &:hover, &:focus, &:hover:focus {
-          background-color: #ff85c9 !important;
-        }
-      }
-    }
   }
-
   .el-menu--vertical {
     .el-menu-item, .nest-menu .el-sub-menu > .el-sub-menu__title {
       color: #ffffff !important;

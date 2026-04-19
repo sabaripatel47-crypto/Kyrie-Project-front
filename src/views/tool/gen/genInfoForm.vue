@@ -131,7 +131,7 @@
     </el-row>
     
     <template v-if="info.tplCategory == 'tree'">
-      <h4 class="form-header">其他信息</h4>
+      <h4 class=" ">其他信息</h4>
       <el-row v-show="info.tplCategory == 'tree'">
         <el-col :span="12">
           <el-form-item>
@@ -191,7 +191,7 @@
     </template>
 
     <template v-if="info.tplCategory == 'sub'">
-      <h4 class="form-header">关联信息</h4>
+      <h4 class=" ">关联信息</h4>
       <el-row>
         <el-col :span="12">
           <el-form-item>

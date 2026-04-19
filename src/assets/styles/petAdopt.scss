@@ -1,0 +1,38 @@
+/**
+ * 通用css样式布局处理
+ */
+//  表单项label字重
+.el-form .el-form-item__label {
+  font-weight: 700;
+}
+// 非全屏dialog弹窗距离顶部距离
+.el-dialog:not(.is-fullscreen) {
+  margin-top: 2vh;
+}
+/** 表格分页器布局 **/
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;//让分页器在右边
+  margin-top: 20px;
+  background-color: transparent;
+}
+
+/* 移动端分页器适配 */
+@media (max-width: 768px) {
+  .pagination-container {
+    .el-pagination {
+      > .el-pagination__jump {
+        display: none !important;
+      }
+      > .el-pagination__sizes {
+        display: none !important;
+      }
+    }
+  }
+}
+/* 父子联动边框 */
+.tree-border {
+  border: 1px solid var(--el-border-color-light, #e5e6e7);
+  background: var(--el-bg-color, #FFFFFF) none;
+  width: 100%;
+}
