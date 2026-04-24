@@ -14,7 +14,7 @@
         size="large"
         @input="querySearch"
         prefix-icon="Search"
-        placeholder="菜单搜索，支持标题、URL模糊查询"
+        :placeholder="t('headerSearch.placeholder')"
         clearable
         @keyup.enter="selectActiveResult"
         @keydown.up.prevent="navigateResult('up')"
@@ -50,6 +50,7 @@ import { getNormalPath } from '@/utils/ruoyi'
 import { isHttp } from '@/utils/validate'
 import useSettingsStore from '@/store/modules/settings'
 import usePermissionStore from '@/store/modules/permission'
+import { useI18n } from 'vue-i18n'
 
 interface SearchItem {
   path: string
@@ -68,6 +69,8 @@ const headerSearchSelectRef = ref(null)
 const router = useRouter()
 const theme = computed(() => useSettingsStore().theme)
 const routes = computed(() => usePermissionStore().defaultRoutes)
+
+const { t } = useI18n()
 
 function click(): void {
   show.value = !show.value

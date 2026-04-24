@@ -41,6 +41,31 @@
           :class="settingsStore.isDark ? 'text-[#a9aab9]' : 'text-[#914539]'"
         />
 
+        <el-tooltip :content="t('navbar.tooltip.language')" effect="dark" placement="bottom">
+          <el-dropdown
+            trigger="click"
+            @command="setLang"
+            class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
+            :class="
+              settingsStore.isDark
+                ? 'text-[#a9aab9] hover:bg-[#222535]'
+                : 'text-[#914539] hover:bg-[#fe9c8c]/20'
+            "
+          >
+            <svg-icon
+              icon-class="language"
+              :color="settingsStore.isDark ? '#a9aab9' : '#914539'"
+              class="transition-transform duration-300 hover:scale-[1.15]"
+            />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="zh-cn">中文</el-dropdown-item>
+                <el-dropdown-item command="en">English</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </el-tooltip>
+
         <screenfull
           id="screenfull"
           class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
@@ -51,7 +76,7 @@
           "
         />
 
-        <el-tooltip content="主题模式" effect="dark" placement="bottom">
+        <el-tooltip :content="t('navbar.tooltip.theme')" effect="dark" placement="bottom">
           <div
             class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
             :class="
@@ -74,7 +99,7 @@
           </div>
         </el-tooltip>
 
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
+        <el-tooltip :content="t('navbar.tooltip.size')" effect="dark" placement="bottom">
           <size-select
             id="size-select"
             class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
@@ -86,7 +111,7 @@
           />
         </el-tooltip>
 
-        <el-tooltip content="消息通知" effect="dark" placement="bottom">
+        <el-tooltip :content="t('navbar.tooltip.notice')" effect="dark" placement="bottom">
           <header-notice
             id="header-notice"
             class="inline-flex items-center px-2 h-full text-[18px] cursor-pointer transition-[background] duration-300 rounded-full"
@@ -119,19 +144,19 @@
         <template #dropdown>
           <el-dropdown-menu>
             <router-link to="/user/profile">
-              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item>{{ t('navbar.dropdown.profile') }}</el-dropdown-item>
             </router-link>
             <el-dropdown-item
               command="setLayout"
               v-if="settingsStore.showSettings"
             >
-              <span>布局设置</span>
+              <span>{{ t('navbar.dropdown.layout') }}</span>
             </el-dropdown-item>
             <el-dropdown-item command="lockScreen">
-              <span>锁定屏幕</span>
+              <span>{{ t('navbar.dropdown.lock') }}</span>
             </el-dropdown-item>
             <el-dropdown-item divided command="logout">
-              <span>退出登录</span>
+              <span>{{ t('navbar.dropdown.logout') }}</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -142,6 +167,8 @@
 
 <script setup lang="ts">
 import { ElMessageBox } from "element-plus";
+import { useI18n } from 'vue-i18n'
+import { LOCALE_STORAGE_KEY, type AppLocale } from '@/i18n'
 import Breadcrumb from "@/components/Breadcrumb/index.vue";
 import TopNav from "@/components/TopNav/index.vue";
 import TopBar from "./TopBar/index.vue";
@@ -162,6 +189,8 @@ const appStore = useAppStore();
 const userStore = useUserStore();
 const lockStore = useLockStore();
 const settingsStore = useSettingsStore();
+
+const { locale, t } = useI18n()
 
 function toggleSideBar(): void {
   appStore.toggleSideBar();
@@ -184,9 +213,9 @@ function handleCommand(command: string): void {
 }
 
 function logout(): void {
-  ElMessageBox.confirm("确定注销并退出系统吗？", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
+  ElMessageBox.confirm(t('navbar.logoutDialog.message'), t('navbar.logoutDialog.title'), {
+    confirmButtonText: t('navbar.logoutDialog.confirm'),
+    cancelButtonText: t('navbar.logoutDialog.cancel'),
     type: "warning",
   })
     .then(() => {
@@ -195,6 +224,11 @@ function logout(): void {
       });
     })
     .catch(() => {});
+}
+
+function setLang(lang: AppLocale): void {
+  locale.value = lang
+  localStorage.setItem(LOCALE_STORAGE_KEY, lang)
 }
 
 const emits = defineEmits(["setLayout"]);
