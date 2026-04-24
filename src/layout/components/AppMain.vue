@@ -58,16 +58,16 @@ function addIframe(): void {
 .fixed-header + .app-main {
   margin-top: 50px;
 }
-
+// 顶部有tagsview的时候
 .hasTagsView {
   .app-main {
-    /* 84 = navbar + tags-view = 50 + 34 */
-    min-height: calc(100vh - 84px);
+    /* 110 = navbar + tags-view+顶部navbar的margin=16 = 60 + 34+16 */
+    min-height: calc(100vh - 110px);
   }
 
   .fixed-header + .app-main {
-    margin-top: 84px;
-    height: calc(100vh - 84px);
+    margin-top: 110px;
+    height: calc(100vh - 110px);
     min-height: 0px;
   }
 }
@@ -99,8 +99,8 @@ function addIframe(): void {
     .hasTagsView .fixed-header + .app-main {
       padding-bottom: max(17px, calc(constant(safe-area-inset-bottom) + 10px));
       padding-bottom: max(17px, calc(env(safe-area-inset-bottom) + 10px));
-      height: calc(100svh - 84px);
-      height: calc(100dvh - 84px);
+      height: calc(100svh - 110px);
+      height: calc(100dvh - 110px);
     }
   }
 }
