@@ -1,33 +1,70 @@
 <template>
-  <div class="lock-container">
-    <!-- 动态粒子背景 -->
-    <canvas ref="particleCanvas" class="particle-bg"></canvas>
-
-    <!-- 时钟 -->
-    <div class="lock-time">{{ currentTime }}</div>
-    <div class="lock-date">{{ currentDate }}</div>
-
-    <!-- 锁屏卡片 -->
-    <div class="lock-card">
-      <div class="avatar-wrap">
-        <img :src="userStore.avatar" class="lock-avatar" @error="onAvatarError" />
-        <div class="lock-icon">🔒</div>
+  <!-- fixed+inset-0,让其铺满整个屏幕,inset-0就是top/right/bottom/left四个都为0 -->
+  <div class="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-white">
+    <!-- space-y控制每个子元素之间的间距 -->
+    <div class="space-y-8 text-center">
+      <div class="space-y-2">
+        <div class="text-6xl font-light">
+          {{ currentTime }}
+        </div>
+        <div class="text-sm text-white/60">
+          {{ currentDate }}
+        </div>
       </div>
-      <div class="lock-username">{{ userStore.nickName }}</div>
-      <div class="lock-hint">系统已锁定，请输入密码解锁</div>
+      <!-- 下方卡片 -->
+       <!-- backdrop-blur: 苹果ios毛玻璃效果 -->
+      <div class="space-y-6 rounded-2xl border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur">
+        <div class="space-y-3">
+          <img
+            :src="userStore.avatar"
+            class="mx-auto h-20 w-20 rounded-full border-2 border-white/20"
+            @error="onAvatarError"
+          />
+          <div class="text-lg font-medium">
+            {{ userStore.nickName }}
+          </div>
+          <p class="text-sm text-white/60">
+            系统已锁定，请输入登录密码解锁
+          </p>
+        </div>
 
-      <div class="input-wrap" :class="{ shake: isShaking }">
-        <input ref="passwordInput" v-model="password" type="password" placeholder="请输入登录密码" class="lock-input" @keydown.enter="handleUnlock" autocomplete="off" />
-        <button class="unlock-btn" @click="handleUnlock" :disabled="loading">
-          <span v-if="!loading">→</span>
-          <span v-else class="loading-dot">···</span>
+        <div class="space-y-3">
+          <!-- focus-within:元素内部有元素获得焦点时触发样式 -->
+          <div
+            :class="[
+              'flex items-center rounded-full border border-white/15 bg-black/20 px-4 py-2 transition',
+              'focus-within:border-white/40 focus-within:bg-black/30',
+              isShaking && 'shake'
+            ]"
+          >
+          <!-- autocomplete:关闭自动补全 ,即浏览器不会自动帮你填入之前输过的内容 -->
+            <input
+              ref="passwordInput"
+              v-model="password"
+              type="password"
+              placeholder="请输入登录密码"
+              autocomplete="off"
+              class="h-10 flex-1 bg-transparent text-sm outline-none placeholder:text-white/35"
+              @keydown.enter="handleUnlock"
+            />
+            <!-- disabled:button的disabled生效的时候触发该样式 -->
+            <button
+              class="h-10 w-10 rounded-full bg-indigo-500 text-sm font-medium transition hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60"
+              :disabled="loading"
+              @click="handleUnlock"
+            >
+              {{ loading ? '...' : '解锁' }}
+            </button>
+          </div>
+
+          <p v-if="errorMsg" class="text-sm text-rose-300">
+            {{ errorMsg }}
+          </p>
+        </div>
+
+        <button class="text-sm text-white/50 transition hover:text-white/80" @click="goLogin">
+          退出重新登录
         </button>
-      </div>
-
-      <div v-if="errorMsg" class="error-msg">{{ errorMsg }}</div>
-
-      <div class="lock-footer">
-        <a href="javascript:;" @click="goLogin">退出重新登录</a>
       </div>
     </div>
   </div>
@@ -35,340 +72,112 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import useUserStore from '@/store/modules/user'
-import useLockStore from '@/store/modules/lock'
 import { unlockScreen } from '@/api/login'
 import defAva from '@/assets/images/profile.jpg'
+import useLockStore from '@/store/modules/lock'
+import useUserStore from '@/store/modules/user'
 
 const router = useRouter()
 const userStore = useUserStore()
 const lockStore = useLockStore()
 
-const password = ref<string>('')
-const loading = ref<boolean>(false)
-const errorMsg = ref<string>('')
-const isShaking = ref<boolean>(false)
-const currentTime = ref<string>('')
-const currentDate = ref<string>('')
+const password = ref('')
+const loading = ref(false)
+const errorMsg = ref('')
+const isShaking = ref(false)
+const currentTime = ref('')
+const currentDate = ref('')
 const passwordInput = ref<HTMLInputElement | null>(null)
-const particleCanvas = ref<HTMLCanvasElement | null>(null)
 
-let timer: any = null
-let animationId: any  = null
-let particles: any = []
+let timer: ReturnType<typeof setInterval> | null = null
 
-const onAvatarError = (e: Event) => {
-  (e.target as HTMLImageElement).src = defAva
+const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+// 图片加载错误时的处理
+const onAvatarError = (event: Event) => {
+  ;(event.target as HTMLImageElement).src = defAva
+}
+// 更新时钟
+const updateClock = () => {
+  const now = new Date()
+  // 简写的函数,相当于function pad(value: number){},在开头补0,至少两位,比如 5 -> 05, 10 -> 10
+  const pad = (value: number) => String(value).padStart(2, '0')
+  // map给数组每一项做一下pad的处理,join将数组每一项以:拼接成字符串
+  currentTime.value = [now.getHours(), now.getMinutes(), now.getSeconds()].map(pad).join(':')
+  // 通过weekDays转换成中文的星期几
+  currentDate.value = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${weekDays[now.getDay()]}`
+}
+// 密码输错或者其他情况的时候展示的内容
+const showError = (message: string) => {
+  errorMsg.value = message
+  isShaking.value = true
+  // 和直接setTimeout一样,这个表明是浏览器的API
+  window.setTimeout(() => {
+    isShaking.value = false
+  }, 500)
 }
 
-const startClock = () => {
-  const update = () => {
-    const now = new Date()
-    const pad = (n: number) => String(n).padStart(2, '0')
-    currentTime.value = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
-    const days = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-    currentDate.value = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${days[now.getDay()]}`
-  }
-  update()
-  timer = setInterval(update, 1000)
-}
-
+// 解锁
 const handleUnlock = async () => {
   if (!password.value) {
     showError('请输入密码')
     return
   }
+
   loading.value = true
   errorMsg.value = ''
+
   try {
     await unlockScreen(password.value)
+    
     const lockPath = lockStore.lockPath
     lockStore.unlockScreen()
     router.replace(lockPath)
-  } catch (err: any) {
-    const msg = err.message || err.toString()
-    showError(msg)
+  } catch (error: any) {
+    // 展示接口报错信息
+    showError(error?.message || String(error))
     password.value = ''
     nextTick(() => passwordInput.value?.focus())
   } finally {
     loading.value = false
   }
 }
-
-const showError = (msg: string) => {
-  errorMsg.value = msg
-  isShaking.value = true
-  setTimeout(() => { isShaking.value = false }, 600)
-}
-
-const goLogin = () => {
+// 回到登录
+const goLogin = async () => {
   lockStore.unlockScreen()
-  userStore.logOut().then(() => {
-    router.push('/login')
-  })
-}
-
-const initParticles = () => {
-  const canvas = particleCanvas.value
-  if (!canvas) return
-  const ctx = canvas.getContext('2d')
-  const resize = () => {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-  }
-  resize()
-  window.addEventListener('resize', resize)
-
-  particles = Array.from({ length: 80 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2 + 1,
-    dx: (Math.random() - 0.5) * 0.6,
-    dy: (Math.random() - 0.5) * 0.6,
-    alpha: Math.random() * 0.5 + 0.2
-  }))
-
-  const draw = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    particles.forEach(p => {
-      ctx.beginPath()
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-      ctx.fillStyle = `rgba(255,255,255,${p.alpha})`
-      ctx.fill()
-      p.x += p.dx
-      p.y += p.dy
-      if (p.x < 0 || p.x > canvas.width) p.dx *= -1
-      if (p.y < 0 || p.y > canvas.height) p.dy *= -1
-    })
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j]
-        const dist = Math.hypot(a.x - b.x, a.y - b.y)
-        if (dist < 120) {
-          ctx.beginPath()
-          ctx.moveTo(a.x, a.y)
-          ctx.lineTo(b.x, b.y)
-          ctx.strokeStyle = `rgba(255,255,255,${0.15 * (1 - dist / 120)})`
-          ctx.lineWidth = 0.5
-          ctx.stroke()
-        }
-      }
-    }
-    animationId = requestAnimationFrame(draw)
-  }
-  draw()
+  await userStore.logOut()
+  router.push('/login')
 }
 
 onMounted(() => {
-  startClock()
-  initParticles()
+  updateClock()
+  // 每秒更新一次时钟
+  timer = setInterval(updateClock, 1000)
+  // 进入页面自动聚焦输入框(这里加nextTick的原因是输入框假如通过v-if="show"这个来控制渲染,那么组件挂载到DOM,响应式还没更新完成,输入框还没渲染,直接调用focus会报错)
   nextTick(() => passwordInput.value?.focus())
 })
-
+// 清除定时器
 onBeforeUnmount(() => {
-  clearInterval(timer)
-  cancelAnimationFrame(animationId)
+  if (timer) {
+    clearInterval(timer)
+  }
 })
 </script>
 
 <style scoped>
-/* 样式与原文件完全一致，无需改动 */
-.lock-container {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  overflow: hidden;
+/* 动态类名,密码错误的时候触发抖动动画 */
+.shake {
+  animation: shake 0.2s ease-in-out;
 }
-
-.particle-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.lock-time {
-  position: relative;
-  z-index: 1;
-  font-size: 72px;
-  font-weight: 200;
-  color: #fff;
-  letter-spacing: 4px;
-  text-shadow: 0 0 40px rgba(255,255,255,0.3);
-  margin-bottom: 8px;
-  font-variant-numeric: tabular-nums;
-}
-
-.lock-date {
-  position: relative;
-  z-index: 1;
-  font-size: 15px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 48px;
-  letter-spacing: 2px;
-}
-
-.lock-card {
-  position: relative;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 24px;
-  padding: 40px 48px;
-  width: 360px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-}
-
-.avatar-wrap {
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.lock-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.3);
-  object-fit: cover;
-  display: block;
-}
-
-.lock-icon {
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  backdrop-filter: blur(8px);
-}
-
-.lock-username {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  letter-spacing: 1px;
-}
-
-.lock-hint {
-  color: rgba(255,255,255,0.5);
-  font-size: 13px;
-  margin-bottom: 28px;
-}
-
-.input-wrap {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50px;
-  padding: 4px 4px 4px 20px;
-  transition: border-color 0.3s;
-}
-
-.input-wrap:focus-within {
-  border-color: rgba(255,255,255,0.6);
-  background: rgba(255,255,255,0.13);
-}
-
-.input-wrap.shake {
-  animation: shake 0.5s ease;
-}
-
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-8px); }
-  40% { transform: translateX(8px); }
-  60% { transform: translateX(-6px); }
-  80% { transform: translateX(6px); }
-}
-
-.lock-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 15px;
-  padding: 10px 0;
-}
-
-.lock-input::placeholder {
-  color: rgba(255,255,255,0.35);
-}
-
-.unlock-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.unlock-btn:hover:not(:disabled) {
-  transform: scale(1.08);
-}
-
-.unlock-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.loading-dot {
-  font-size: 13px;
-  letter-spacing: 1px;
-}
-
-.error-msg {
-  margin-top: 14px;
-  color: #ff7675;
-  font-size: 13px;
-  text-align: center;
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.lock-footer {
-  margin-top: 24px;
-}
-
-.lock-footer a {
-  color: rgba(255,255,255,0.4);
-  font-size: 13px;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.lock-footer a:hover {
-  color: rgba(255,255,255,0.8);
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
 }
 </style>

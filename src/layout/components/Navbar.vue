@@ -235,7 +235,7 @@ const emits = defineEmits(["setLayout"]);
 function setLayout(): void {
   emits("setLayout");
 }
-
+// 锁定屏幕,从router获取当前路径暂存
 function lockScreen() {
   const currentPath = route.fullPath;
   lockStore.lockScreen(currentPath);

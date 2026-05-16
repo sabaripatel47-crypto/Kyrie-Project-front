@@ -86,6 +86,7 @@ app.mount('#app')
 
 <script setup>
 import { useI18n } from 'vue-i18n'
+//t:translate,翻译,locale:本地语言环境,用于切换语言文本文件
 const { t, locale } = useI18n()
 
 // 切换语言

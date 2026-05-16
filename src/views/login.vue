@@ -2,16 +2,15 @@
   <div
     class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-surface font-headline text-on-surface"
   >
-    <!-- 背景气泡 -->
-    <div
-      class="pointer-events-none absolute -top-20 -left-20 w-96 h-96 rounded-full bg-primary-container opacity-40 blur-[60px] animate-pulse"
-    ></div>
-    <div
-      class="pointer-events-none absolute bottom-10 right-10 w-80 h-80 rounded-full bg-secondary-container opacity-40 blur-[60px]"
-    ></div>
-    <div
-      class="pointer-events-none absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-tertiary-container opacity-40 blur-[60px]"
-    ></div>
+  <!-- 背景区域 -->
+    <img
+      src="@/assets/images/login-background1.jpg"
+      alt="pets background"
+      class="pointer-events-none absolute inset-0 h-full w-full"
+    />
+    <!-- 背景的两层遮罩 -->
+    <div class="pointer-events-none absolute inset-0 bg-slate-950/55"></div>
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(254,156,140,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(154,225,255,0.18),transparent_24%),linear-gradient(120deg,rgba(15,23,42,0.78),rgba(15,23,42,0.38))]"></div>
 
     <main
       class="relative z-10 w-full max-w-[1100px] px-6 flex flex-col lg:flex-row items-center justify-center gap-12"
@@ -29,6 +28,7 @@
           <div
             class="absolute -bottom-4 -left-4 w-14 h-14 bg-secondary-container rounded-[16px] flex items-center justify-center shadow-lg rotate-6"
           >
+          <!-- 这里使用了google的Material Symbols字体(类名+文本=图标),子啊index.html里可以看到导入 -->
             <span class="material-symbols-outlined text-secondary text-3xl"
               >pets</span
             >
@@ -83,7 +83,7 @@
               />
             </div>
           </el-form-item>
-
+          <!-- el-form渲染出来的form表单按enter的时候会默认触发一次请求,所以密码或者验证码的输入框不需要绑定keyup.enter的监听,否则会重复触发 -->
           <!-- 密码 -->
           <el-form-item prop="password">
             <label class="field-label">密码</label>
@@ -96,14 +96,14 @@
                 v-model="loginForm.password"
                 :type="showPassword ? 'text' : 'password'"
                 auto-complete="off"
-                placeholder="••••••••"
+                placeholder="请输入密码"
                 class="login-input"
-                @keyup.enter="handleLogin"
               />
               <span
                 class="material-symbols-outlined input-suffix"
                 @click="showPassword = !showPassword"
               >
+              <!-- 用的google的类名 -->
                 {{ showPassword ? "visibility_off" : "visibility" }}
               </span>
             </div>
@@ -123,7 +123,6 @@
                   auto-complete="off"
                   placeholder="请输入验证码"
                   class="login-input"
-                  @keyup.enter="handleLogin"
                 />
               </div>
               <img
@@ -167,7 +166,7 @@
           </el-form-item>
         </el-form>
 
-        <!-- 注册入口 -->
+        <!-- 注册入口(想要注册就将register改为true即可) -->
         <div class="mt-6 pt-6 border-t border-primary/5 text-center">
           <p class="text-sm text-on-surface-variant">
             还没有账号？
@@ -195,7 +194,7 @@
 
     <!-- 底部版权 -->
     <footer
-      class="fixed bottom-0 w-full h-10 flex items-center justify-center text-xs tracking-widest text-on-surface/40"
+      class="fixed bottom-0 z-10 w-full h-10 flex items-center justify-center text-xs tracking-widest text-white/60"
     >
       <span>{{ footerContent }}</span>
     </footer>
@@ -204,10 +203,14 @@
 
 <script setup lang="ts">
 import { getCodeImg } from "@/api/login";
+// 用来存储记住密码相关
 import Cookies from "js-cookie";
+// 密码加解密工具
 import { encrypt, decrypt } from "@/utils/jsencrypt";
 import useUserStore from "@/store/modules/user";
 import defaultSettings from "@/settings";
+
+import type { FormInstance } from "element-plus/es/components/form";
 import type { LoginForm } from "@/types/api/login";
 
 const title = import.meta.env.VITE_APP_TITLE;
@@ -215,7 +218,7 @@ const footerContent = defaultSettings.footerContent;
 const userStore = useUserStore();
 const route = useRoute();
 const router = useRouter();
-const { proxy } = getCurrentInstance();
+const loginRef = ref<FormInstance>()
 
 const loginForm = ref<LoginForm>({
   username: "admin",
@@ -234,25 +237,29 @@ const loginRules = {
 const codeUrl = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
+// 前端是否开启验证码
 const captchaEnabled = ref(true);
-const register = ref(false);
+const register = ref(true);
 const redirect = ref<string | undefined>(undefined);
 
 watch(
   route,
   (newRoute: any) => {
+    // 读取 URL 里名为 redirect 的查询参数存储
     redirect.value = (newRoute.query && newRoute.query.redirect) as
       | string
       | undefined;
   },
-  { immediate: true }
+  { immediate: true }//组件加载就执行一次
 );
-
+// 登录
 function handleLogin(): void {
-  proxy.$refs.loginRef.validate((valid: boolean) => {
+    loginRef.value.validate((valid: boolean) => {
     if (valid) {
       loading.value = true;
+      // 如果勾选记住密码
       if (loginForm.value.rememberMe) {
+        // 过期时间30天
         Cookies.set("username", loginForm.value.username, { expires: 30 });
         Cookies.set("password", encrypt(loginForm.value.password), {
           expires: 30,
@@ -268,9 +275,19 @@ function handleLogin(): void {
       userStore
         .login(loginForm.value)
         .then(() => {
+          /**例如/login?redirect=/system/user&id=1&name=test,query为
+          {
+          redirect: "/system/user",
+          id: "1",
+           name: "test"
+          }
+           */
           const query = route.query;
+          // 提取出路径里非redirect里的query内容
           const otherQueryParams = Object.keys(query).reduce(
             (acc: Record<string, any>, cur) => {
+              // acc:一开始是{}
+              // cur:当前遍历到的key,比如name,每次取出query里对应key的值存入
               if (cur !== "redirect") acc[cur] = query[cur];
               return acc;
             },
@@ -285,18 +302,20 @@ function handleLogin(): void {
     }
   });
 }
-
+// 获取验证码
 function getCode(): void {
   getCodeImg().then((res) => {
     captchaEnabled.value =
       res.captchaEnabled === undefined ? true : res.captchaEnabled;
     if (captchaEnabled.value) {
+      // img是base64编码
       codeUrl.value = "data:image/gif;base64," + res.img;
+      //后端用 uuid 找到当时生成的那条验证码，再和用户填的 code 比对；比对后一般会删掉redis缓存(key是base64编码)，防止重复使用
       loginForm.value.uuid = res.uuid;
     }
   });
 }
-
+// 获取账号密码
 function getCookie(): void {
   const username = Cookies.get("username");
   const password = Cookies.get("password");
@@ -310,7 +329,7 @@ function getCookie(): void {
     uuid: "",
   };
 }
-
+// 开始获取code和账号密码
 getCode();
 getCookie();
 </script>

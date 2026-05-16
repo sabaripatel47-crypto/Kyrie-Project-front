@@ -8,6 +8,7 @@ interface LockState {
 
 export const useLockStore = defineStore('lock', {
   state: (): LockState => ({
+    // 从本地存储获取锁定状态和锁定前的路径
     isLock: JSON.parse(localStorage.getItem(LOCK_KEY) || 'false'),
     lockPath: localStorage.getItem(LOCK_PATH_KEY) || '/index'
   }),

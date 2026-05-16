@@ -93,7 +93,7 @@ const registerForm = ref<RegisterForm>({
   code: "",
   uuid: ""
 })
-
+// 判断两次密码是否一致
 const equalToPassword = (rule: any, value: string, callback: (error?: Error) => void): void => {
   if (registerForm.value.password !== value) {
     callback(new Error("两次输入的密码不一致"))
@@ -122,7 +122,7 @@ const registerRules = {
 const codeUrl = ref<string>("")
 const loading = ref<boolean>(false)
 const captchaEnabled = ref<boolean>(true)
-
+// 注册
 function handleRegister(): void {
   proxy.$refs.registerRef.validate((valid: boolean) => {
     if (valid) {
@@ -130,7 +130,7 @@ function handleRegister(): void {
       register(registerForm.value).then(() => {
         const username = registerForm.value.username
         ElMessageBox.alert("<font color='red'>恭喜你，您的账号 " + username + " 注册成功！</font>", "系统提示", {
-          dangerouslyUseHTMLString: true,
+          dangerouslyUseHTMLString: true,//允许使用html,dangerous的意思是会带来XSS攻击,可能执行<script>之类的脚本
           type: "success",
         }).then(() => {
           router.push("/login")
@@ -144,7 +144,7 @@ function handleRegister(): void {
     }
   })
 }
-
+// 获取验证码
 function getCode(): void {
   getCodeImg().then(res => {
     captchaEnabled.value = res.captchaEnabled === undefined ? true : res.captchaEnabled
@@ -163,7 +163,7 @@ getCode()
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   background-image: url("../assets/images/login-background.jpg");
   background-size: cover;
 }

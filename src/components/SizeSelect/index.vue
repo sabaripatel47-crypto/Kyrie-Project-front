@@ -45,6 +45,5 @@ function handleSetSize(size: 'large' | 'default' | 'small'): void {
 .size-icon--style {
   font-size: 18px;
   line-height: 50px;
-  padding-right: 7px;
 }
 </style>
