@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <splitpanes :horizontal="appStore.device === 'mobile'" class="default-theme">
+      
+      <splitpanes :horizontal="appStore.device === 'mobile'" class="default-theme user-splitpanes">
         <!--部门数据-->
         <pane size="16">
           <el-col>
@@ -218,7 +219,7 @@ import { getToken } from "@/utils/auth"
 import useAppStore from '@/store/modules/app'
 import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser, deptTreeSelect } from "@/api/system/user"
 import { Splitpanes, Pane } from "splitpanes"
-import "splitpanes/dist/splitpanes.css"
+
 import type { SysUser, UserQueryParams, UserFormDataResult } from '@/types/api/system/user'
 import type { SysRole } from '@/types/api/system/role'
 import type { SysPost } from '@/types/api/system/post'

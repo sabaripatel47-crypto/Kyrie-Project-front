@@ -5,6 +5,8 @@ import Cookies from 'js-cookie'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+// 这个导入不应该放到src\views\system\user\index.vue里,因为element-plus里面我们要对其样式覆盖,让其先加载,并且他不能放到element-plus文件夹下,因为里面使用了大量的@use,Sass 要求 @use 必须在其他规则之前，所以整个样式入口直接编译失败
+import 'splitpanes/dist/splitpanes.css'
 
 import i18n from '@/i18n'
 

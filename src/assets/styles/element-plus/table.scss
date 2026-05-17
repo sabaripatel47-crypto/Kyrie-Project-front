@@ -7,6 +7,10 @@
   --pet-text: #312e29;
   --pet-text-muted: #5e5b54;
   --pet-primary-container: #fe9c8c;
+  --pet-table-checkbox-border: #d4cbbf;
+  --pet-table-checkbox-hover: #fe9c8c;
+  --pet-table-checkbox-checked: #914539;
+  --pet-table-checkbox-checkmark: #ffefed;
 }
 
 html.dark {
@@ -16,6 +20,10 @@ html.dark {
   --pet-text: #ececfd;
   --pet-text-muted: rgba(236, 236, 253, 0.74);
   --pet-primary-container: #f672be;
+  --pet-table-checkbox-border: rgba(236, 236, 253, 0.24);
+  --pet-table-checkbox-hover: #ff85c9;
+  --pet-table-checkbox-checked: #ff85c9;
+  --pet-table-checkbox-checkmark: #0b0e18;
 }
 
 .el-table {
@@ -69,6 +77,42 @@ html.dark {
     td.el-table__cell {
       background-color: transparent;
     }
+  }
+
+  .el-checkbox {
+    --el-checkbox-input-border-color: var(--pet-table-checkbox-border);
+    --el-checkbox-border-color-hover: var(--pet-table-checkbox-hover);
+    --el-checkbox-checked-bg-color: var(--pet-table-checkbox-checked);
+    --el-checkbox-checked-input-border-color: var(--pet-table-checkbox-checked);
+    --el-checkbox-checked-text-color: var(--pet-text);
+  }
+
+  .el-checkbox__inner {
+    background-color: var(--pet-surface);
+    border-color: var(--pet-table-checkbox-border);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .el-checkbox__inner:hover {
+    border-color: var(--pet-table-checkbox-hover);
+  }
+
+  .el-checkbox__input.is-checked .el-checkbox__inner,
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: var(--pet-table-checkbox-checked);
+    border-color: var(--pet-table-checkbox-checked);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--pet-table-checkbox-checked) 16%, transparent);
+  }
+
+  .el-checkbox__input.is-checked .el-checkbox__inner::after {
+    border-color: var(--pet-table-checkbox-checkmark);
+  }
+
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+    background-color: var(--pet-table-checkbox-checkmark);
   }
 
   .el-table__empty-block {

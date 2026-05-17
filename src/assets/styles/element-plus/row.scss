@@ -1,0 +1,46 @@
+:root {
+  --pet-row-gap: 12px;
+  --pet-col-card-gap: 16px;
+  --pet-col-card-bg: #fcf6ed;
+  --pet-col-card-border: #e2dcd1;
+}
+
+html.dark {
+  --pet-row-gap: 12px;
+  --pet-col-card-gap: 16px;
+  --pet-col-card-bg: #161926;
+  --pet-col-card-border: rgba(236, 236, 253, 0.14);
+}
+
+.el-row {
+  row-gap: var(--pet-row-gap);
+
+  &.mb8 {
+    margin-bottom: 8px;
+  }
+}
+
+.el-col {
+  min-width: 0;
+}
+
+.el-col.card-box {
+  margin-bottom: var(--pet-col-card-gap);
+
+  > .el-card {
+    height: 100%;
+    border-radius: 0.75rem;
+    border-color: var(--pet-col-card-border);
+    background-color: var(--pet-col-card-bg);
+  }
+}
+
+@media (max-width: 768px) {
+  .el-row {
+    row-gap: 10px;
+  }
+
+  .el-col.card-box {
+    margin-bottom: 12px;
+  }
+}

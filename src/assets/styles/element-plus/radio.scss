@@ -1,0 +1,191 @@
+:root {
+  --pet-radio-border: #e2dcd1;
+  --pet-radio-border-hover: #fe9c8c;
+  --pet-radio-border-checked: #914539;
+  --pet-radio-dot: #914539;
+  --pet-radio-label: #312e29;
+  --pet-radio-label-muted: #5e5b54;
+  --pet-radio-bg: #fcf6ed;
+  --pet-radio-bg-soft: #f6f0e6;
+  --pet-radio-button-active-bg: #914539;
+  --pet-radio-button-active-text: #ffefed;
+  --pet-radio-button-active-border: #914539;
+  --pet-radio-button-shadow: 0 12px 24px rgba(145, 69, 57, 0.16);
+  --pet-radio-focus-ring: rgba(145, 69, 57, 0.14);
+}
+
+html.dark {
+  --pet-radio-border: rgba(236, 236, 253, 0.16);
+  --pet-radio-border-hover: #f672be;
+  --pet-radio-border-checked: #ff85c9;
+  --pet-radio-dot: #ff85c9;
+  --pet-radio-label: #ececfd;
+  --pet-radio-label-muted: rgba(236, 236, 253, 0.72);
+  --pet-radio-bg: #10131f;
+  --pet-radio-bg-soft: #161926;
+  --pet-radio-button-active-bg: #ff85c9;
+  --pet-radio-button-active-text: #0b0e18;
+  --pet-radio-button-active-border: #ff85c9;
+  --pet-radio-button-shadow: 0 0 20px rgba(255, 133, 201, 0.24);
+  --pet-radio-focus-ring: rgba(255, 133, 201, 0.18);
+}
+
+.el-radio-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.el-radio {
+  --el-radio-input-border-color: var(--pet-radio-border);
+  --el-radio-input-bg-color: var(--pet-radio-bg);
+  --el-radio-input-border-color-hover: var(--pet-radio-border-hover);
+  --el-radio-input-fill: var(--pet-radio-dot);
+  --el-radio-text-color: var(--pet-radio-label);
+  --el-radio-font-weight: 500;
+
+  margin-right: 0;
+  color: var(--pet-radio-label);
+
+  .el-radio__label {
+    padding-left: 10px;
+    color: var(--pet-radio-label);
+    line-height: 1.4;
+  }
+
+  .el-radio__inner {
+    width: 18px;
+    height: 18px;
+    background-color: var(--pet-radio-bg);
+    border: 1px solid var(--pet-radio-border);
+    box-shadow: 0 0 0 1px transparent;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .el-radio__inner::after {
+    width: 6px;
+    height: 6px;
+    background-color: var(--pet-radio-dot);
+    box-shadow: none;
+  }
+
+  .el-radio__input.is-checked .el-radio__inner {
+    background-color: var(--pet-radio-bg);
+    border-color: var(--pet-radio-border-checked);
+    box-shadow:
+      0 0 0 1px var(--pet-radio-border-checked) inset,
+      0 0 0 4px var(--pet-radio-focus-ring);
+  }
+
+  .el-radio .el-radio__input.is-checked .el-radio__inner::after,
+  .el-radio__input.is-checked .el-radio__inner::after {
+    background-color: var(--pet-radio-dot);
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .el-radio__input.is-checked + .el-radio__label {
+    color: var(--pet-radio-label);
+    font-weight: 600;
+  }
+
+  .el-radio__input.is-focus .el-radio__inner {
+    box-shadow:
+      0 0 0 1px var(--pet-radio-border-checked) inset,
+      0 0 0 4px var(--pet-radio-focus-ring);
+  }
+
+  &:not(.is-disabled):hover {
+    .el-radio__inner {
+      border-color: var(--pet-radio-border-hover);
+      transform: translateY(-1px);
+    }
+
+    .el-radio__label {
+      color: var(--pet-radio-label);
+    }
+  }
+
+  &.is-disabled {
+    .el-radio__inner {
+      background-color: var(--pet-radio-bg-soft);
+      border-color: var(--pet-radio-border);
+      opacity: 0.8;
+    }
+
+    .el-radio__label,
+    .el-radio__input.is-checked + .el-radio__label {
+      color: var(--pet-radio-label-muted);
+    }
+  }
+}
+
+.el-radio-button {
+  --el-radio-button-bg-color: var(--pet-radio-bg);
+  --el-radio-button-checked-bg-color: var(--pet-radio-button-active-bg);
+  --el-radio-button-checked-text-color: var(--pet-radio-button-active-text);
+  --el-radio-button-checked-border-color: var(--pet-radio-button-active-border);
+  --el-radio-button-disabled-checked-fill: var(--pet-radio-button-active-bg);
+
+  .el-radio-button__inner {
+    min-height: 36px;
+    padding: 0 16px;
+    border: 1px solid var(--pet-radio-border);
+    background-color: var(--pet-radio-bg);
+    color: var(--pet-radio-label);
+    font-weight: 600;
+    line-height: 34px;
+    letter-spacing: 0;
+    box-shadow: none;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  &:first-child .el-radio-button__inner {
+    border-radius: 0.75rem 0 0 0.75rem;
+  }
+
+  &:last-child .el-radio-button__inner {
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+
+  &:not(:first-child) .el-radio-button__inner {
+    margin-left: -1px;
+  }
+
+  .el-radio-button__original-radio:checked + .el-radio-button__inner {
+    background-color: var(--pet-radio-button-active-bg);
+    border-color: var(--pet-radio-button-active-border);
+    color: var(--pet-radio-button-active-text);
+    box-shadow: var(--pet-radio-button-shadow);
+  }
+
+  .el-radio-button__original-radio:not(:disabled):hover + .el-radio-button__inner {
+    border-color: var(--pet-radio-border-hover);
+    color: var(--pet-radio-label);
+    transform: translateY(-1px);
+  }
+
+  .el-radio-button__original-radio:checked:hover + .el-radio-button__inner {
+    color: var(--pet-radio-button-active-text);
+  }
+
+  .el-radio-button__original-radio:focus-visible + .el-radio-button__inner {
+    box-shadow:
+      0 0 0 1px var(--pet-radio-border-checked) inset,
+      0 0 0 4px var(--pet-radio-focus-ring);
+  }
+
+  .el-radio-button__original-radio:disabled + .el-radio-button__inner {
+    background-color: var(--pet-radio-bg-soft);
+    border-color: var(--pet-radio-border);
+    color: var(--pet-radio-label-muted);
+  }
+}

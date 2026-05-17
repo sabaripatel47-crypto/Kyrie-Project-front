@@ -1,0 +1,166 @@
+:root {
+  --pet-dropdown-surface: #fcf6ed;
+  --pet-dropdown-surface-soft: #f6f0e6;
+  --pet-dropdown-border: #e2dcd1;
+  --pet-dropdown-text: #312e29;
+  --pet-dropdown-text-muted: #5e5b54;
+  --pet-dropdown-primary: #914539;
+  --pet-dropdown-checkmark: #ffefed;
+  --pet-dropdown-hover: rgba(254, 156, 140, 0.14);
+  --pet-dropdown-active: rgba(254, 156, 140, 0.2);
+  --pet-dropdown-shadow: 0 18px 36px rgba(49, 46, 41, 0.12);
+}
+
+html.dark {
+  --pet-dropdown-surface: #161926;
+  --pet-dropdown-surface-soft: #10131f;
+  --pet-dropdown-border: rgba(236, 236, 253, 0.14);
+  --pet-dropdown-text: #ececfd;
+  --pet-dropdown-text-muted: rgba(236, 236, 253, 0.72);
+  --pet-dropdown-primary: #ff85c9;
+  --pet-dropdown-checkmark: #0b0e18;
+  --pet-dropdown-hover: rgba(246, 114, 190, 0.14);
+  --pet-dropdown-active: rgba(246, 114, 190, 0.22);
+  --pet-dropdown-shadow: 0 22px 40px rgba(0, 0, 0, 0.28);
+}
+
+.el-dropdown {
+  color: var(--pet-dropdown-text);
+  transition: color 160ms ease;
+
+  .el-tooltip__trigger,
+  .el-dropdown-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    transition:
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .el-icon {
+    color: inherit;
+    transition:
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  &:not(.is-disabled):hover {
+    color: var(--pet-dropdown-primary);
+
+    .el-icon {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.el-dropdown__popper.el-popper {
+  border: 1px solid var(--pet-dropdown-border);
+  border-radius: 0.75rem;
+  background-color: var(--pet-dropdown-surface);
+  box-shadow: var(--pet-dropdown-shadow);
+  overflow: hidden;
+
+  .el-popper__arrow::before {
+    border-color: var(--pet-dropdown-border);
+    background-color: var(--pet-dropdown-surface);
+  }
+}
+
+.el-dropdown-menu {
+  padding: 8px;
+  border: 0;
+  background-color: transparent;
+}
+
+.el-dropdown-menu__item {
+  min-width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 0.625rem;
+  color: var(--pet-dropdown-text);
+  line-height: 1.4;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+
+  &:not(.is-disabled):focus,
+  &:not(.is-disabled):hover {
+    background-color: var(--pet-dropdown-hover);
+    color: var(--pet-dropdown-primary);
+  }
+
+  &:not(.is-disabled):active {
+    background-color: var(--pet-dropdown-active);
+    color: var(--pet-dropdown-primary);
+  }
+
+  &:not(.is-disabled):focus:active,
+  &:not(.is-disabled).is-active {
+    background-color: var(--pet-dropdown-active);
+    color: var(--pet-dropdown-primary);
+  }
+
+  &.is-disabled {
+    color: var(--pet-dropdown-text-muted);
+    opacity: 0.7;
+  }
+
+  &:has(.el-checkbox__input.is-checked) {
+    background-color: var(--pet-dropdown-active);
+    color: var(--pet-dropdown-primary);
+  }
+}
+
+.el-dropdown-menu__item--divided {
+  margin-top: 8px;
+
+  &::before {
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    margin: 0;
+    background-color: var(--pet-dropdown-border);
+  }
+}
+
+.el-dropdown-menu__item i,
+.el-dropdown-menu__item .el-icon {
+  margin-right: 8px;
+  color: inherit;
+}
+
+.el-dropdown-menu__item .el-checkbox {
+  width: 100%;
+  color: inherit;
+}
+
+.el-dropdown-menu__item .el-checkbox__label {
+  color: inherit;
+}
+
+.el-dropdown-menu__item .el-checkbox__inner {
+  border-color: var(--pet-dropdown-border);
+  background-color: var(--pet-dropdown-surface);
+}
+
+.el-dropdown-menu__item .el-checkbox__input.is-checked .el-checkbox__inner,
+.el-dropdown-menu__item .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  border-color: var(--pet-dropdown-primary);
+  background-color: var(--pet-dropdown-primary);
+}
+
+.el-dropdown-menu__item .el-checkbox__input.is-checked .el-checkbox__inner::after {
+  border-color: var(--pet-dropdown-checkmark);
+}
+
+.el-dropdown-menu__item .el-checkbox__input.is-indeterminate .el-checkbox__inner::before {
+  background-color: var(--pet-dropdown-checkmark);
+}
+
+.el-dropdown-menu__item:has(.el-checkbox__input.is-checked) .el-checkbox__label {
+  color: var(--pet-dropdown-primary);
+  font-weight: 600;
+}

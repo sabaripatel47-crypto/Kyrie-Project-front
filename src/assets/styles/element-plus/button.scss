@@ -1,0 +1,409 @@
+:root {
+  --pet-btn-radius: 0.75rem;
+  --pet-btn-height: 36px;
+  --pet-btn-font-weight: 600;
+  --pet-btn-shadow-soft: 0 8px 16px rgba(49, 46, 41, 0.06);
+  --pet-btn-shadow-strong: 0 12px 22px rgba(145, 69, 57, 0.16);
+  --pet-btn-border: #e2dcd1;
+  --pet-btn-surface: #fcf6ed;
+  --pet-btn-surface-alt: #f6f0e6;
+  --pet-btn-surface-hover: #fff8f4;
+  --pet-btn-text: #312e29;
+  --pet-btn-muted: #5e5b54;
+  --pet-btn-primary: #914539;
+  --pet-btn-primary-hover: #7c392f;
+  --pet-btn-primary-soft: rgba(145, 69, 57, 0.12);
+  --pet-btn-success: #2f7d4a;
+  --pet-btn-success-soft: rgba(47, 125, 74, 0.12);
+  --pet-btn-danger: #b31b25;
+  --pet-btn-danger-soft: rgba(179, 27, 37, 0.12);
+  --pet-btn-warning: #9a6400;
+  --pet-btn-warning-soft: rgba(154, 100, 0, 0.12);
+  --pet-btn-info: #04647d;
+  --pet-btn-info-soft: rgba(4, 100, 125, 0.12);
+  --pet-btn-purple: #7151b6;
+  --pet-btn-purple-soft: rgba(113, 81, 182, 0.12);
+  --pet-btn-teal: #3f6f67;
+  --pet-btn-teal-soft: #d8ebe3;
+  --pet-btn-sky: #4f88a8;
+  --pet-btn-sky-soft: #d8ebf5;
+  --pet-btn-lavender: #8f78a8;
+  --pet-btn-lavender-soft: #e4dcf0;
+  --pet-btn-rose: #b85d6a;
+  --pet-btn-rose-soft: #f6dbe0;
+  --pet-btn-icon-add: url("/src/assets/icons/svg/pet-add.svg");
+  --pet-btn-icon-edit: url("/src/assets/icons/svg/pet-edit.svg");
+  --pet-btn-icon-import: url("/src/assets/icons/svg/pet-import.svg");
+  --pet-btn-icon-export: url("/src/assets/icons/svg/pet-export.svg");
+  --pet-btn-icon-delete: url("/src/assets/icons/svg/pet-remove.svg");
+}
+
+html.dark {
+  --pet-btn-shadow-soft: 0 10px 20px rgba(0, 0, 0, 0.18);
+  --pet-btn-shadow-strong: 0 14px 28px rgba(0, 0, 0, 0.28);
+  --pet-btn-border: rgba(236, 236, 253, 0.14);
+  --pet-btn-surface: #161926;
+  --pet-btn-surface-alt: #10131f;
+  --pet-btn-surface-hover: #1b2030;
+  --pet-btn-text: #ececfd;
+  --pet-btn-muted: rgba(236, 236, 253, 0.72);
+  --pet-btn-primary: #ff85c9;
+  --pet-btn-primary-hover: #f672be;
+  --pet-btn-primary-soft: rgba(255, 133, 201, 0.14);
+  --pet-btn-success: #9bff9b;
+  --pet-btn-success-soft: rgba(155, 255, 155, 0.14);
+  --pet-btn-danger: #ff8a9a;
+  --pet-btn-danger-soft: rgba(255, 138, 154, 0.14);
+  --pet-btn-warning: #ffd27a;
+  --pet-btn-warning-soft: rgba(255, 210, 122, 0.14);
+  --pet-btn-info: #8debff;
+  --pet-btn-info-soft: rgba(141, 235, 255, 0.14);
+  --pet-btn-purple: #cca8ff;
+  --pet-btn-purple-soft: rgba(204, 168, 255, 0.14);
+  --pet-btn-teal: #9dd3c7;
+  --pet-btn-teal-soft: rgba(157, 211, 199, 0.16);
+  --pet-btn-sky: #8debff;
+  --pet-btn-sky-soft: rgba(141, 235, 255, 0.16);
+  --pet-btn-lavender: #d5bcff;
+  --pet-btn-lavender-soft: rgba(213, 188, 255, 0.16);
+  --pet-btn-rose: #ffb3bf;
+  --pet-btn-rose-soft: rgba(255, 179, 191, 0.16);
+}
+
+.el-button {
+  --el-button-border-radius: var(--pet-btn-radius);
+
+  min-height: var(--pet-btn-height);
+  padding: 0 16px;
+  font-weight: var(--pet-btn-font-weight);
+  letter-spacing: 0;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+
+  &:not(.is-link):not(.is-text) {
+    box-shadow: var(--pet-btn-shadow-soft);
+  }
+
+  &:not(.is-disabled):not(.is-link):not(.is-text):hover {
+    transform: translateY(-1px);
+  }
+
+  &:not(.is-disabled):not(.is-link):not(.is-text):active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .el-icon {
+    font-size: 14px;
+  }
+}
+
+.el-button:not(.el-button--primary):not(.el-button--success):not(.el-button--warning):not(.el-button--danger):not(.el-button--info) {
+  --el-button-bg-color: var(--pet-btn-surface);
+  --el-button-border-color: var(--pet-btn-border);
+  --el-button-text-color: var(--pet-btn-text);
+  --el-button-hover-bg-color: var(--pet-btn-surface-hover);
+  --el-button-hover-border-color: #cfc7bc;
+  --el-button-hover-text-color: var(--pet-btn-text);
+  --el-button-active-bg-color: var(--pet-btn-surface-alt);
+  --el-button-active-border-color: var(--pet-btn-border);
+}
+
+.el-button--primary {
+  --el-button-bg-color: var(--pet-btn-primary);
+  --el-button-border-color: var(--pet-btn-primary);
+  --el-button-text-color: #ffefed;
+  --el-button-hover-bg-color: var(--pet-btn-primary-hover);
+  --el-button-hover-border-color: var(--pet-btn-primary-hover);
+  --el-button-hover-text-color: #ffefed;
+  --el-button-active-bg-color: var(--pet-btn-primary-hover);
+  --el-button-active-border-color: var(--pet-btn-primary-hover);
+
+  box-shadow: var(--pet-btn-shadow-strong);
+}
+
+.el-button--success {
+  --el-button-text-color: var(--pet-btn-success);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-success) 24%, var(--pet-btn-border));
+  --el-button-bg-color: var(--pet-btn-success-soft);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-success) 18%, white);
+  --el-button-hover-border-color: var(--pet-btn-success);
+  --el-button-hover-text-color: var(--pet-btn-success);
+}
+
+.el-button--danger {
+  --el-button-text-color: var(--pet-btn-danger);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-danger) 24%, var(--pet-btn-border));
+  --el-button-bg-color: var(--pet-btn-danger-soft);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-danger) 12%, white);
+  --el-button-hover-border-color: var(--pet-btn-danger);
+  --el-button-hover-text-color: var(--pet-btn-danger);
+}
+
+.el-button--warning {
+  --el-button-text-color: var(--pet-btn-warning);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-warning) 24%, var(--pet-btn-border));
+  --el-button-bg-color: var(--pet-btn-warning-soft);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-warning) 14%, white);
+  --el-button-hover-border-color: var(--pet-btn-warning);
+  --el-button-hover-text-color: var(--pet-btn-warning);
+}
+
+.el-button--info {
+  --el-button-text-color: var(--pet-btn-info);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-info) 24%, var(--pet-btn-border));
+  --el-button-bg-color: var(--pet-btn-info-soft);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-info) 12%, white);
+  --el-button-hover-border-color: var(--pet-btn-info);
+  --el-button-hover-text-color: var(--pet-btn-info);
+}
+
+/* Toolbar actions in this system are mostly plain semantic pills */
+.el-button.is-plain {
+  background-color: var(--el-button-bg-color);
+}
+
+/* Main toolbar buttons across system list pages */
+.el-button.is-plain.el-button--primary,
+.el-button.is-plain.el-button--success,
+.el-button.is-plain.el-button--info,
+.el-button.is-plain.el-button--warning,
+.el-button.is-plain.el-button--danger {
+  min-height: 42px;
+  padding: 0 18px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 12px;
+  box-shadow: 0 10px 18px rgba(49, 46, 41, 0.08);
+  gap: 8px;
+
+  .el-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .el-icon svg {
+    opacity: 0;
+  }
+
+  .el-icon::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+.el-button.is-plain.el-button--primary:not(.is-disabled):hover,
+.el-button.is-plain.el-button--success:not(.is-disabled):hover,
+.el-button.is-plain.el-button--info:not(.is-disabled):hover,
+.el-button.is-plain.el-button--warning:not(.is-disabled):hover,
+.el-button.is-plain.el-button--danger:not(.is-disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(49, 46, 41, 0.12);
+}
+
+.el-button.el-button--primary.is-plain {
+  --el-button-bg-color: var(--pet-btn-success-soft);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-success) 30%, var(--pet-btn-border));
+  --el-button-text-color: var(--pet-btn-success);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-success-soft) 74%, white);
+  --el-button-hover-border-color: var(--pet-btn-success);
+  --el-button-hover-text-color: var(--pet-btn-success);
+  box-shadow: 0 10px 18px rgba(47, 125, 74, 0.14);
+
+  .el-icon::before {
+    background-image: var(--pet-btn-icon-add);
+  }
+}
+
+.el-button.el-button--success.is-plain {
+  --el-button-bg-color: var(--pet-btn-teal-soft);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-teal) 34%, var(--pet-btn-border));
+  --el-button-text-color: var(--pet-btn-teal);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-teal-soft) 78%, white);
+  --el-button-hover-border-color: var(--pet-btn-teal);
+  --el-button-hover-text-color: var(--pet-btn-teal);
+  box-shadow: 0 10px 18px rgba(63, 111, 103, 0.14);
+
+  .el-icon::before {
+    background-image: var(--pet-btn-icon-edit);
+  }
+}
+
+.el-button.el-button--info.is-plain {
+  --el-button-bg-color: var(--pet-btn-sky-soft);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-sky) 30%, var(--pet-btn-border));
+  --el-button-text-color: var(--pet-btn-sky);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-sky-soft) 80%, white);
+  --el-button-hover-border-color: var(--pet-btn-sky);
+  --el-button-hover-text-color: var(--pet-btn-sky);
+  box-shadow: 0 10px 18px rgba(79, 136, 168, 0.14);
+
+  .el-icon::before {
+    background-image: var(--pet-btn-icon-import);
+  }
+}
+
+.el-button.el-button--warning.is-plain {
+  --el-button-bg-color: var(--pet-btn-lavender-soft);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-lavender) 28%, var(--pet-btn-border));
+  --el-button-text-color: var(--pet-btn-lavender);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-lavender-soft) 80%, white);
+  --el-button-hover-border-color: var(--pet-btn-lavender);
+  --el-button-hover-text-color: var(--pet-btn-lavender);
+  box-shadow: 0 10px 18px rgba(143, 120, 168, 0.14);
+
+  .el-icon::before {
+    background-image: var(--pet-btn-icon-export);
+  }
+}
+
+.el-button.el-button--danger.is-plain {
+  --el-button-bg-color: var(--pet-btn-rose-soft);
+  --el-button-border-color: color-mix(in srgb, var(--pet-btn-rose) 32%, var(--pet-btn-border));
+  --el-button-text-color: var(--pet-btn-rose);
+  --el-button-hover-bg-color: color-mix(in srgb, var(--pet-btn-rose-soft) 82%, white);
+  --el-button-hover-border-color: var(--pet-btn-rose);
+  --el-button-hover-text-color: var(--pet-btn-rose);
+  box-shadow: 0 10px 18px rgba(184, 93, 106, 0.14);
+
+  .el-icon::before {
+    background-image: var(--pet-btn-icon-delete);
+  }
+}
+
+html.dark {
+  .el-button.is-plain.el-button--primary .el-icon,
+  .el-button.is-plain.el-button--success .el-icon,
+  .el-button.is-plain.el-button--info .el-icon,
+  .el-button.is-plain.el-button--warning .el-icon,
+  .el-button.is-plain.el-button--danger .el-icon {
+    background-color: rgba(11, 14, 24, 0.16);
+  }
+
+  .el-button.is-plain.el-button--primary:not(.is-disabled):hover,
+  .el-button.is-plain.el-button--success:not(.is-disabled):hover,
+  .el-button.is-plain.el-button--info:not(.is-disabled):hover,
+  .el-button.is-plain.el-button--warning:not(.is-disabled):hover,
+  .el-button.is-plain.el-button--danger:not(.is-disabled):hover {
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+  }
+}
+
+.el-button.is-link,
+.el-button.is-text {
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: 0.5rem;
+  box-shadow: none;
+}
+
+.el-button.is-link {
+  --el-button-text-color: var(--pet-btn-muted);
+  --el-button-hover-text-color: var(--pet-btn-text);
+  --el-button-active-text-color: var(--pet-btn-text);
+}
+
+.el-button.is-link:not(.is-disabled):hover,
+.el-button.is-text:not(.is-disabled):hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Row operation buttons: compact icon chips, distinct by action */
+.el-table .el-button.is-link:has(.el-icon):not(:has(span)),
+.el-button.is-link:has(.el-icon):not(:has(span)) {
+  width: 30px;
+  min-width: 30px;
+  padding: 0;
+  justify-content: center;
+  border: 1px solid transparent;
+  background-color: transparent;
+}
+
+.el-button[icon="Edit"].is-link,
+.el-button[icon="Key"].is-link {
+  --el-button-text-color: var(--pet-btn-primary);
+  background-color: var(--pet-btn-primary-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-primary) 18%, transparent);
+}
+
+.el-button[icon="Delete"].is-link,
+.el-button[icon="CircleClose"].is-link {
+  --el-button-text-color: var(--pet-btn-danger);
+  background-color: var(--pet-btn-danger-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-danger) 18%, transparent);
+}
+
+.el-button[icon="CircleCheck"].is-link,
+.el-button[icon="User"].is-link {
+  --el-button-text-color: var(--pet-btn-purple);
+  background-color: var(--pet-btn-purple-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-purple) 18%, transparent);
+}
+
+.el-button[icon="View"].is-link,
+.el-button[icon="Operation"].is-link,
+.el-button[icon="Search"].is-link {
+  --el-button-text-color: var(--pet-btn-info);
+  background-color: var(--pet-btn-info-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-info) 18%, transparent);
+}
+
+.el-button[icon="Plus"].is-link,
+.el-button[icon="Upload"].is-link {
+  --el-button-text-color: var(--pet-btn-success);
+  background-color: var(--pet-btn-success-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-success) 18%, transparent);
+}
+
+.el-button[icon="Download"].is-link {
+  --el-button-text-color: var(--pet-btn-warning);
+  background-color: var(--pet-btn-warning-soft);
+  border-color: color-mix(in srgb, var(--pet-btn-warning) 18%, transparent);
+}
+
+.el-button.is-link:not(.is-disabled):hover {
+  filter: saturate(1.05);
+}
+
+/* Filter area buttons: search and reset should feel like query tools */
+.el-form--inline .el-button[icon="Search"] {
+  padding-inline: 18px;
+}
+
+.el-form--inline .el-button[icon="Refresh"]:not(.is-link) {
+  --el-button-bg-color: var(--pet-btn-surface);
+  --el-button-border-color: var(--pet-btn-border);
+  --el-button-text-color: var(--pet-btn-muted);
+  --el-button-hover-bg-color: var(--pet-btn-surface-hover);
+  --el-button-hover-border-color: #cfc7bc;
+  --el-button-hover-text-color: var(--pet-btn-text);
+  box-shadow: none;
+}
+
+/* Dialog footer buttons: quiet secondary + clear primary */
+.dialog-footer .el-button:not(.el-button--primary) {
+  --el-button-bg-color: var(--pet-btn-surface);
+  --el-button-border-color: var(--pet-btn-border);
+  --el-button-text-color: var(--pet-btn-text);
+}
+
+/* Small tool icon buttons such as avatar crop controls */
+.el-button.is-circle,
+.el-button:has(.el-icon):not(:has(span)):not(.is-link) {
+  width: 36px;
+  min-width: 36px;
+  padding: 0;
+}
